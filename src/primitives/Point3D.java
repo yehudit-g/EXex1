@@ -7,7 +7,7 @@ public class Point3D {
     double x;
     double y;
     double z;
-    static Point3D ZERO=new Point3D(0,0,0);
+    public static Point3D ZERO=new Point3D(0,0,0);
 
     public Point3D(double x, double y, double z) {
         this.x = x;
@@ -28,8 +28,10 @@ public class Point3D {
     }
 
     public Point3D add (Vector v){
-        Vector v1=new Vector(x, y, z);
-        return v1.add(v).head;
+
+        Point3D p=new Point3D(x+v.head.x, y+v.head.y, z+v.head.z);
+      //  Vector v1=new Vector(x, y, z);
+        return p;
     }
 
     public double distanceSquared(Point3D p){

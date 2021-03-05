@@ -13,14 +13,14 @@ public class Vector {
     public Vector(Coordinate x, Coordinate y, Coordinate z) {
         Point3D p=new Point3D(x,y,z);
         if(p.equals(Point3D.ZERO))
-            throw new IllegalArgumentException("The zero vector is illegal")
+            throw new IllegalArgumentException("The zero vector is illegal");
         this.head = p;
     }
 
     public Vector(double x, double y, double z) {
         Point3D p=new Point3D(x,y,z);
         if(p.equals(Point3D.ZERO))
-            throw new IllegalArgumentException("The zero vector is illegal")
+            throw new IllegalArgumentException("The zero vector is illegal");
         this.head = p;
     }
 
@@ -62,7 +62,9 @@ public class Vector {
     }
 
     public Vector normalize(){
-        this=this.scale(this.length());
+        head.x= head.x/length();
+        head.y= head.y/length();
+        head.z= head.z/length();
         return this;
     }
 
