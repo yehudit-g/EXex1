@@ -62,9 +62,10 @@ public class Vector {
     }
 
     public Vector normalize(){
-        head.x= head.x/length();
-        head.y= head.y/length();
-        head.z= head.z/length();
+        double len=length();
+        head.x= head.x/len;
+        head.y= head.y/len;
+        head.z= head.z/len;
         return this;
     }
 
