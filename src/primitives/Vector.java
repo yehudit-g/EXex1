@@ -29,26 +29,26 @@ public class Vector {
     }
 
     public Vector subtract(Vector v){
-        Vector v1=new Vector(head.x-v.head.x, head.y-v.head.y, head.z-v.head.z);
+        Vector v1=new Vector(getHead().x-v.getHead().x, getHead().y-v.getHead().y, getHead().z-v.getHead().z);
         return v1;
     }
 
     public Vector add (Vector v){
-        Vector v1=new Vector(head.x+v.head.x, head.y+v.head.y, head.z+v.head.z);
+        Vector v1=new Vector(getHead().x+v.getHead().x, getHead().y+v.getHead().y, getHead().z+v.getHead().z);
         return v1;
     }
 
     public Vector scale (double scalar){
-        Vector v1=new Vector(head.x*scalar, head.y*scalar, head.z*scalar);
+        Vector v1=new Vector(getHead().x*scalar, getHead().y*scalar, getHead().z*scalar);
         return v1;
     }
 
     public double dotProduct (Vector v){
-       return head.x*v.head.x + head.y*v.head.y + head.z*v.head.z;
+       return getHead().x*v.getHead().x + getHead().y*v.getHead().y + getHead().z*v.getHead().z;
     }
 
     public Vector crossProduct (Vector v){
-        Vector v1=new Vector((head.y*v.head.z)-(head.z*v.head.y), (head.z*v.head.x)-(head.x*v.head.z), (head.x*v.head.y)-(head.y*v.head.x));
+        Vector v1=new Vector((getHead().y*v.getHead().z)-(getHead().z*v.getHead().y), (getHead().z*v.getHead().x)-(getHead().x*v.getHead().z), (head.x*v.head.y)-(head.y*v.head.x));
         return v1;
     }
 
