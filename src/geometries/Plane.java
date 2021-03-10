@@ -2,7 +2,10 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Vector;
-
+/**
+ * Plane class represents 2D Plane in 3D Cartesian coordinate system
+ * by 3D point on the plane and its normal vector
+ */
 public class Plane implements Geometry {
 
     Point3D q0;
@@ -25,7 +28,7 @@ public class Plane implements Geometry {
 
     @Override
     public Vector getNormal(Point3D p) {
-        return normal;
+        return null;
     }
 
     public Point3D getQ0() {

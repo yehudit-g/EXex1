@@ -1,7 +1,10 @@
 package primitives;
 
 import java.util.Objects;
-
+/**
+ * Class Vector represents a Vector in Cartesian coordinate system
+ * by its three dimensional point head
+ */
 public class Vector {
 
     Point3D head;
@@ -28,21 +31,25 @@ public class Vector {
         return head;
     }
 
+    //return the resulting vector of sub between 2 vectors
     public Vector subtract(Vector v) {
         Vector v1 = new Vector(getHead().x.coord - v.getHead().x.coord, getHead().y.coord - v.getHead().y.coord, getHead().z.coord - v.getHead().z.coord);
         return v1;
     }
 
+    //return the resulting vector of adding vector to the current vector.
     public Vector add(Vector v) {
         Vector v1 = new Vector(getHead().x.coord + v.getHead().x.coord, getHead().y.coord + v.getHead().y.coord, getHead().z.coord + v.getHead().z.coord);
         return v1;
     }
 
+    //return the resulting vector of scalar product on the current vector.
     public Vector scale(double scalar) {
         Vector v1 = new Vector(getHead().x.coord * scalar, getHead().y.coord * scalar, getHead().z.coord * scalar);
         return v1;
     }
 
+    //return the resulting vector of vector product on the current vector.
     public double dotProduct(Vector v) {
         double u1=getHead().x.coord;
         double u2=getHead().y.coord;
@@ -53,6 +60,7 @@ public class Vector {
         return u1 * v1 + u2 * v2 + u3 * v3;
     }
 
+    //return the resulting vector of cross product on the current vector.
     public Vector crossProduct(Vector v) {
         double u1=getHead().x.coord;
         double u2=getHead().y.coord;
@@ -63,21 +71,25 @@ public class Vector {
         return new Vector((u2 * v3) - (u3 * v2), (u3 * v1) - (u1 * v3), (u1 * v2) - (u2 * v1));
     }
 
+    //return the squared length of the vector.
     public double lengthSquared() {
         Point3D p = new Point3D(head.x, head.y, head.z);
         return p.distanceSquared(Point3D.ZERO);
     }
 
+    //return the length of the vector.
     public double length() {
         return Math.sqrt(this.lengthSquared());
     }
 
+    //normalize the vector (to length = 1) and return it.
     public Vector normalize() {
         double len = length();
         head=new Point3D(head.x.coord / len, head.y.coord / len, head.z.coord / len);
         return this;
     }
 
+    //return a normalized vector.
     public Vector normalized() {
         Vector v1 = new Vector(head.x, head.y, head.z);
         return v1.normalize();

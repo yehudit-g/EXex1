@@ -2,7 +2,10 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Vector;
-
+/**
+ * Triangle class represents triangle as a 2D polygon
+ * in 3D Cartesian coordinate system
+ */
 public class Triangle extends Polygon {
 
     public Triangle(Point3D p1, Point3D p2, Point3D p3) {

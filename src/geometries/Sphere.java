@@ -2,7 +2,10 @@ package geometries;
 
 import primitives.Point3D;
 import primitives.Vector;
-
+/**
+ * Sphere class represents 3D sphere in Cartesian coordinate system
+ * by 3D center point and radius length
+ */
 public class Sphere implements Geometry {
 
     Point3D center;

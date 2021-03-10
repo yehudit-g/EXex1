@@ -4,7 +4,10 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
-
+/**
+ * Cylinder class represents cylinder as a tube with limited height
+ * in 3D Cartesian coordinate system
+ */
 public class Cylinder extends Tube {
 
     double height;

@@ -1,9 +1,14 @@
 package primitives;
 
 import java.util.Objects;
-
+/**
+ * Class Ray represents a ray in Cartesian coordinate system
+ * by 3D beginning point and direction vector
+ */
 public class Ray {
+    //the ray's beginning point
     Point3D p0;
+    //the ray's direction vector
     Vector dir;
 
     public Ray(Point3D p0, Vector dir) {
