@@ -28,7 +28,7 @@ public class Plane implements Geometry {
 
     @Override
     public Vector getNormal(Point3D p) {
-        return null;
+        return normal;
     }
 
     public Point3D getQ0() {
