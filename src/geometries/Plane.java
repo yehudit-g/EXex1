@@ -15,7 +15,12 @@ public class Plane implements Geometry {
 
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
         this.q0 = p1;
-        this.normal = null;
+        Vector U = p1.subtract(p2);
+        Vector V = p3.subtract(p2);
+
+        Vector N = U.crossProduct(V);
+
+        this.normal = N.normalize();
     }
 
     @Override
