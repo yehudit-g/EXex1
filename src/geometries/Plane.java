@@ -13,7 +13,7 @@ public class Plane implements Geometry {
 
     public Plane(Point3D q0, Vector normal) {
         this.q0 = q0;
-        this.normal = normal;
+        this.normal = normal.normalize();
     }
 
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
@@ -29,7 +29,7 @@ public class Plane implements Geometry {
     @Override
     public Vector getNormal(Point3D p) {
         return normal;
-    }
+    } //checking if p on the plane?!
 
     public Point3D getQ0() {
         return q0;
