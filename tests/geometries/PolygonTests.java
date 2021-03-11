@@ -50,7 +50,7 @@ class PolygonTests {
         try {
             new Polygon(new Point3D(0, 0, 1), new Point3D(1, 0, 0),
                     new Point3D(0, 1, 0), new Point3D(0, 0.5, 0.5));
-            fail("Constructed a polygon with vertix on a side");
+            fail("Constructed a polygon with vertex on a side");
         } catch (IllegalArgumentException e) {}
 
         // TC11: Last point = first point
@@ -60,11 +60,11 @@ class PolygonTests {
             fail("Constructed a polygon with vertice on a side");
         } catch (IllegalArgumentException e) {}
 
-        // TC12: Colocated points
+        // TC12: Collocated points
         try {
             new Polygon(new Point3D(0, 0, 1), new Point3D(1, 0, 0),
                     new Point3D(0, 1, 0), new Point3D(0, 1, 0));
-            fail("Constructed a polygon with vertice on a side");
+            fail("Constructed a polygon with vertices on a side");
         } catch (IllegalArgumentException e) {}
 
     }

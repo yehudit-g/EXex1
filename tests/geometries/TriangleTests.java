@@ -10,11 +10,8 @@ import static primitives.Util.isZero;
 public class TriangleTests {
     @Test
     void getNormal() {
-        // ============ Equivalence Partitions Tests ==============
         Triangle t = new Triangle(new Point3D(0, 2, 0), new Point3D(1, 0, 0), new Point3D(0, 1, 0));
         Vector v=new Vector(0,0,1);
         assertEquals( v, t.getNormal(new Point3D(0, 1, 0)),"Bad normal to triangle");
-
-        //checking point outside the triangle?!
     }
 }
