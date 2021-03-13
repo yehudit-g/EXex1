@@ -19,7 +19,7 @@ public class Plane implements Geometry {
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
         this.q0 = p1;
         Vector U = p1.subtract(p2);
-        Vector V = p3.subtract(p2);
+        Vector V = p2.subtract(p3);
 
         Vector N = U.crossProduct(V);
 
@@ -29,7 +29,7 @@ public class Plane implements Geometry {
     @Override
     public Vector getNormal(Point3D p) {
         return normal;
-    } //checking if p on the plane?!
+    }
 
     public Point3D getQ0() {
         return q0;
