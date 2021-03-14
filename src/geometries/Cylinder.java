@@ -37,6 +37,6 @@ public class Cylinder extends Tube {
         if(p.subtract(o).length()==radius) {
                 return super.getNormal(p);
         }
-        return axisRay.getDir().normalized();
+        return axisRay.getDir().normalized(); //add checking if top or bottom!
     }
 }
