@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * Cylinder class represents cylinder as a tube with limited height
  * in 3D Cartesian coordinate system
@@ -38,5 +40,10 @@ public class Cylinder extends Tube {
                 return super.getNormal(p);
         }
         return axisRay.getDir().normalized(); //add checking if top or bottom!
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return super.findIntersections(ray);
     }
 }

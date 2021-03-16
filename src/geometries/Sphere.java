@@ -1,7 +1,11 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
+
 /**
  * Sphere class represents 3D sphere in Cartesian coordinate system
  * by 3D center point and radius length
@@ -35,5 +39,10 @@ public class Sphere implements Geometry {
                 "center=" + center +
                 ", radius=" + radius +
                 '}';
+    }
+
+    @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
     }
 }

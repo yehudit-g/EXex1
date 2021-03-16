@@ -1,7 +1,11 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
+
 /**
  * Triangle class represents triangle as a 2D polygon
  * in 3D Cartesian coordinate system
@@ -13,10 +17,17 @@ public class Triangle extends Polygon {
     }
 
     @Override
+    public List<Point3D> findIntersections(Ray ray) {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "Triangle{" +
                 "vertices=" + vertices +
                 ", plane=" + plane +
                 '}';
     }
+
+
 }
