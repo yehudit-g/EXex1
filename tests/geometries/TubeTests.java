@@ -7,6 +7,10 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TubeTests {
+    /**
+     * Test method for
+     * {@link geometries.Tube#Tube(Ray, double)}
+     */
     @Test
     void getNormal() {
         Vector v=new Vector(1,0,0);

@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
 
 public class TriangleTests {
+    /**
+     * Test method for
+     * {@link geometries.Triangle#Triangle(Point3D, Point3D, Point3D)}
+     */
     @Test
     void getNormal() {
         Triangle t = new Triangle(new Point3D(0, 2, 0), new Point3D(1, 0, 0), new Point3D(0, 1, 0));

@@ -8,6 +8,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
 
 class PlaneTests {
+    /**
+     * Test method for
+     * {@link geometries.Plane#Plane(Point3D, Vector)}
+     */
     @Test
     void getNormal() {
         Vector v=new Vector(0,0,1);
