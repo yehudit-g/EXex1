@@ -73,7 +73,7 @@ public class Vector {
 
     //return the squared length of the vector.
     public double lengthSquared() {
-        Point3D p = new Point3D(head.x, head.y, head.z);
+        Point3D p = new Point3D(getHead().x, getHead().y, getHead().z);
         return p.distanceSquared(Point3D.ZERO);
     }
 
@@ -85,13 +85,13 @@ public class Vector {
     //normalize the vector (to length = 1) and return it.
     public Vector normalize() {
         double len = length();
-        head=new Point3D(head.x.coord / len, head.y.coord / len, head.z.coord / len);
+        head=new Point3D(getHead().x.coord / len, getHead().y.coord / len, getHead().z.coord / len);
         return this;
     }
 
-    //return a normalized vector.
+    //return a normalized vector of the given one.
     public Vector normalized() {
-        Vector v1 = new Vector(head.x, head.y, head.z);
+        Vector v1 = new Vector(getHead().x, getHead().y, getHead().z);
         return v1.normalize();
     }
 
@@ -100,14 +100,14 @@ public class Vector {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Vector vector = (Vector) o;
-        return head.equals(vector.head);
+        return getHead().equals(vector.getHead());
     }
 
 
     @Override
     public String toString() {
         return "Vector{" +
-                "head=" + head +
+                "head=" + getHead() +
                 '}';
     }
 }
