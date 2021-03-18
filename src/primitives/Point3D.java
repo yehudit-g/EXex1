@@ -11,6 +11,18 @@ public class Point3D {
     final Coordinate y;
     final Coordinate z;
 
+    public double getX() {
+        return x.coord;
+    }
+
+    public double getY() {
+        return y.coord;
+    }
+
+    public double getZ() {
+        return z.coord;
+    }
+
     public static Point3D ZERO=new Point3D(0,0,0);
 
     public Point3D(double x, double y, double z) {
