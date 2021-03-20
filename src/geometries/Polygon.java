@@ -82,10 +82,11 @@ public class Polygon implements Geometry {
 
     /**
      * Checking if a ray intersection with polygon's plane is inside it's borders
-     * @param P0 of the ray
+     * @param ray
      * @return true if the intersection is inside the polygon and else if not
      */
-    public boolean isInside(Point3D P0){
+    public boolean isInside(Ray ray){
+        Point3D P0=ray.getP0();
         int n=vertices.size();
         //creating a list of the vectors between P0 to the vertices
         Vector[] v=new Vector[n];
@@ -102,19 +103,21 @@ public class Polygon implements Geometry {
 
         //checking the signs according to the first one
         int sign;
-        if(alignZero(v[0].dotProduct(normals[0]))==0) //if the product=0 (v0 and normal0 are orthogonal)
+        Vector V= ray.getDir();
+        if(alignZero(V.dotProduct(normals[0]))==0) //if the product=0 (v0 and normal0 are orthogonal)
             return false;
-        if(v[0].dotProduct(normals[0])>0)
+        if(V.dotProduct(normals[0])>0)
             sign=1;
         else
             sign=0;
         for(int i = 1; i < n; ++i) {
-            double vn=alignZero(v[i].dotProduct(normals[i]));
-            if (sign == 1)
+            double vn=alignZero(V.dotProduct(normals[i]));
+            if (sign == 1) {
                 if (vn <= 0)
                     return false;
-                else if (vn >= 0)
-                    return false;
+            }
+            else if (vn >= 0)
+                return false;
         }
         return true;
     }
@@ -126,9 +129,8 @@ public class Polygon implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> lst = plane.findIntersections(ray);
-        if(lst!=null && isInside(lst.get(0)))
-            return lst;
+        if(isInside(ray))
+            return plane.findIntersections(ray);
         return null;    }
 }
 
