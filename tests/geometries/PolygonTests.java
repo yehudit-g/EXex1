@@ -82,4 +82,18 @@ class PolygonTests {
 
     }
 
+    /**
+     * Test method for {@link geometries.Polygon#isInside(Point3D)} (primitives.Point3D)}.
+     */
+    @Test
+    public void testIsInside(){
+        Polygon pl = new Polygon(new Point3D(1, 0, 0),new Point3D(-1, 0, 0),new Point3D(0, 2, 0));
+        assertEquals(false, pl.isInside(new Point3D(1,1,0)),"Point is not in polygon");
+        assertEquals(true, pl.isInside(new Point3D(0,1,0)),"Point is in polygon");
+        //point on vertex
+        assertEquals(false, pl.isInside(new Point3D(0,2,0)),"Point is not in polygon");
+        //point on edge
+        assertEquals(false, pl.isInside(new Point3D(0.5,0,0)),"Point is not in polygon");
+    }
+
 }

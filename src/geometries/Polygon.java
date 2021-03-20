@@ -80,6 +80,45 @@ public class Polygon implements Geometry {
         }
     }
 
+    /**
+     * Checking if a ray intersection with polygon's plane is inside it's borders
+     * @param P0 of the ray
+     * @return true if the intersection is inside the polygon and else if not
+     */
+    public boolean isInside(Point3D P0){
+        int n=vertices.size();
+        //creating a list of the vectors between P0 to the vertices
+        Vector[] v=new Vector[n];
+        for(int i = 0; i < n; ++i)
+            v[i] = this.vertices.get(i).subtract(P0);
+
+        //creating a list of the normals of each face in the 3D polyhedron
+        //created between the vertices and P0
+        Vector[] normals=new Vector[n];
+        for(int i = 0; i < n-1; ++i)
+            normals[i] = (v[i].crossProduct(v[i+1])).normalize();
+        //the last vector
+        normals[n-1]=(v[n-1].crossProduct(v[0])).normalize();
+
+        //checking the signs according to the first one
+        int sign;
+        if(alignZero(v[0].dotProduct(normals[0]))==0) //if the product=0 (v0 and normal0 are orthogonal)
+            return false;
+        if(v[0].dotProduct(normals[0])>0)
+            sign=1;
+        else
+            sign=0;
+        for(int i = 1; i < n; ++i) {
+            double vn=alignZero(v[i].dotProduct(normals[i]));
+            if (sign == 1)
+                if (vn <= 0)
+                    return false;
+                else if (vn >= 0)
+                    return false;
+        }
+        return true;
+    }
+
     @Override
     public Vector getNormal(Point3D point) {
         return plane.getNormal();
@@ -87,7 +126,9 @@ public class Polygon implements Geometry {
 
     @Override
     public List<Point3D> findIntersections(Ray ray) {
-        return null;
-    }
+        List<Point3D> lst = plane.findIntersections(ray);
+        if(lst!=null && isInside(lst.get(0)))
+            return lst;
+        return null;    }
 }
 

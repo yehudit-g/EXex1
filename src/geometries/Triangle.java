@@ -16,10 +16,13 @@ public class Triangle extends Polygon {
         super(p1, p2, p3);
     }
 
-    @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        return null;
-    }
+//    @Override
+//    public List<Point3D> findIntersections(Ray ray) {
+//        List<Point3D> lst = super.findIntersections(ray);
+//        if(lst!=null && isInside(lst.get(0)))
+//            return lst;
+//        return null;
+//    }
 
     @Override
     public String toString() {
@@ -28,6 +31,5 @@ public class Triangle extends Polygon {
                 ", plane=" + plane +
                 '}';
     }
-
 
 }

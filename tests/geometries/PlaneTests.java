@@ -32,7 +32,7 @@ class PlaneTests {
 
         // ============ Equivalence Partitions Tests ==============
 
-        // TC01: Ray's line is crosses the plane (1 points)
+        // TC01: Ray's line crosses the plane (1 points)
         List<Point3D> result = plane.findIntersections(new Ray(new Point3D(-1, 0, -1), new Vector(1, 0, 1)));
         assertEquals(1, result.size(), "Wrong number of points");
         assertEquals(new Point3D(0,0,0), result.get(0), "Wrong intersection");
