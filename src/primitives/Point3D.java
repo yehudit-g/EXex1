@@ -1,6 +1,5 @@
 package primitives;
 
-import java.awt.*;
 import java.util.Objects;
 /**
  * Class Point3D represents a three dimensional point in Cartesian
@@ -39,14 +38,19 @@ public class Point3D {
 
     //return the resulting vector of sub between 2 points
     public Vector subtract(Point3D p){
-        Vector v1=new Vector(x, y, z);
-        Vector v2=new Vector(p.x, p.y, p.z);
-        return v1.subtract(v2);
+//        return new Vector(
+//                p.x.coord- x.coord,
+//                p.y.coord- y.coord,
+//                p.z.coord- z.coord);
+        return new Vector(
+                x.coord- p.x.coord,
+                y.coord- p.y.coord,
+                z.coord- p.z.coord);
     }
 
     //return the resulting point of adding vector to the current point.
     public Point3D add (Vector v){
-        Point3D p=new Point3D(x.coord+v.head.x.coord, y.coord+v.head.y.coord, z.coord+v.head.z.coord);
+        Point3D p=new Point3D(x.coord+v._head.x.coord, y.coord+v._head.y.coord, z.coord+v._head.z.coord);
         return p;
     }
 
