@@ -58,7 +58,8 @@ public class Camera {
         return _height;
     }
 
-    //c-tor
+
+    //expands the c-tor
     public Camera setViewPlaneSize(double width, double height){
         _width=width;
         _height=height;
@@ -97,5 +98,31 @@ public class Camera {
         Vector Vij=Pij.subtract(_p0); //Vector from the camera to the pixel
 
         return new Ray(_p0,Vij);
+    }
+
+    /**
+     * rotation method to the sides
+     * @param angle :the degrees number to turn (positive- to the right, else to the left)
+     */
+    public Camera turnToSide(double angle){
+        
+    return  this;
+    }
+
+    /**
+     * method of turning up and down
+     * @param angle :the degrees number to turn (positive- up, else -down)
+     */
+    public Camera turnUp(double angle){
+        return this;
+    }
+
+    /**
+     * method of zoom
+     * @param dis :the distance to the desired zoom (positive- getting closer, else- zoom out)
+     */
+    public Camera zoom(double dis){
+       // _p0=_p0.add(_vTo.scale(dis));
+        return this;
     }
 }
