@@ -1,6 +1,8 @@
 package primitives;
 
+import java.util.List;
 import java.util.Objects;
+
 /**
  * Class Ray represents a ray in Cartesian coordinate system
  * by 3D beginning point and direction vector
@@ -47,5 +49,20 @@ public class Ray {
 
     public Point3D getTargetPoint(double t) {
         return getP0().add(getDir().scale(t));
+    }
+
+    public Point3D findClosestPoint(List<Point3D> point3DList) {
+        double distance = Double.POSITIVE_INFINITY;
+        Point3D nearPoint=null;
+        if(point3DList!=null) {
+            for (Point3D p : point3DList) {
+                double dis = p.distance(p0);
+                if (dis < distance) {
+                    distance = dis;
+                    nearPoint = p;
+                }
+            }
+        }
+        return nearPoint;
     }
 }

@@ -100,12 +100,13 @@ public class Camera {
         return new Ray(_p0,Vij);
     }
 
+    //chaining methods
     /**
      * rotation method to the sides
      * @param angle :the degrees number to turn (positive- to the right, else to the left)
      */
     public Camera turnToSide(double angle){
-        
+
     return  this;
     }
 
