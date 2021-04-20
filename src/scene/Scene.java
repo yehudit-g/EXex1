@@ -3,7 +3,10 @@ package scene;
 import elements.AmbientLight;
 import geometries.Geometries;
 import primitives.Color;
-
+/**
+ * The class represents a 3D scene
+ * by it's name, background color, light sources and geometric bodies
+ */
 public class Scene {
     public final String _name;
     public Color _background;

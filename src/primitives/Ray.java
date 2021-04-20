@@ -47,10 +47,18 @@ public class Ray {
         return dir;
     }
 
+    /**
+     * @param t the asked distance from p0
+     * @return the resulting point from the progression of t in the direction of the ray's vector
+     */
     public Point3D getTargetPoint(double t) {
         return getP0().add(getDir().scale(t));
     }
 
+    /**
+     * @param point3DList intersections on the ray
+     * @return the point from the list that is the closest to p0
+     */
     public Point3D findClosestPoint(List<Point3D> point3DList) {
         double distance = Double.POSITIVE_INFINITY;
         Point3D nearPoint=null;
