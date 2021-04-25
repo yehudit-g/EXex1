@@ -14,23 +14,21 @@ import java.util.List;
 public class Geometries implements Intersectable {
     private List<Intersectable> intersectable=null;
 
-    //Array list -explanation:
-    //Array list has constant access time, and it's addition/removal time is O(n) (worst case).
-    //We want to build a scene so we will define the 3D-geometries' collection once (or not match more)
-    //and we wont remove any object from the list (according to the requirements),
-    //and then we will need to access the information many times(every ray's intersections etc.).
-    //In addition, this implements uses less memory than linked list.
+    //Linked list -explanation:
+    //Linked list has constant addition time.
+    //We want to build a scene so we need a good adding-running-time to the 3D-geometries' collection.
+    //In the alternative, array list, the adding will take O(n).
 
     public Geometries() {
-        intersectable=new ArrayList<>();
+        intersectable=new LinkedList<>();
     }
 
     public Geometries(Intersectable... lst) {
-        intersectable = new ArrayList<>();
+        intersectable = new LinkedList<>();
         add(lst);
     }
 
-    private void add(Intersectable... lst) {
+    public void add(Intersectable... lst) {
         intersectable.addAll(Arrays.asList(lst));
     }
 

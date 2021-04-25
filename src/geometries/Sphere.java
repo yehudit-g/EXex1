@@ -58,7 +58,7 @@ public class Sphere implements Geometry {
             return null;
 
         double th=alignZero( Math.sqrt(getRadius()*getRadius()-d*d));
-        //משיק
+        //tangent
         if(isZero(th))
             return null;
         double p1=alignZero(tm-th);

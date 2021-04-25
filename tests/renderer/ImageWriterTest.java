@@ -17,11 +17,11 @@ class ImageWriterTest {
         for (int i = 0; i < nY; i++) {
             for (int j = 0; j < nX; j++) {
                 if (i % gapY == 0 || j % gapX == 0) {
+                    //create the grid
                     imageWriter.writePixel(j, i, new Color(255, 255, 0));
-
                 }
                 else {
-                    //writing blue pixel
+                    //coloring the pixels
                     imageWriter.writePixel(j, i, new Color(200, 0, 200));
                 }
             }
