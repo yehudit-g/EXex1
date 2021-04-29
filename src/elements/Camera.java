@@ -13,9 +13,9 @@ import static primitives.Util.isZero;
  */
 public class Camera {
     final Point3D _p0;
-    final Vector _vUp;
-    final Vector _vTo;
-    final Vector _vRight;
+    private Vector _vUp; //enable rotation
+    private Vector _vTo;
+    private Vector _vRight;
     private double _distance;
     private double _width;
     private double _height;
@@ -24,7 +24,7 @@ public class Camera {
         _p0 = p0;
         _vUp = vUp.normalized();
         _vTo = vTo.normalized();
-        if(!(isZero(_vUp.dotProduct(_vTo)))){
+        if (!(isZero(_vUp.dotProduct(_vTo)))) {
             throw new IllegalArgumentException("vTo and vUp are not orthogonal");
         }
         _vRight = _vTo.crossProduct(_vUp).normalize();
@@ -60,70 +60,134 @@ public class Camera {
 
 
     //expands the c-tor
-    public Camera setViewPlaneSize(double width, double height){
-        _width=width;
-        _height=height;
+    public Camera setViewPlaneSize(double width, double height) {
+        _width = width;
+        _height = height;
         return this;
     }
-    public Camera setDistance(double distance){
-        _distance=distance;
+
+    public Camera setDistance(double distance) {
+        _distance = distance;
         return this;
     }
 
     /**
      * @param nX - number of pixels on the width
      * @param nY - number of pixels on the height
-     * @param j - the pixel's number on the width
-     * @param i - the pixel's number on the height
+     * @param j  - the pixel's number on the width
+     * @param i  - the pixel's number on the height
      * @return a ray from the camera to the asked pixel
      */
-    public Ray constructRayThroughPixel(int nX, int nY, int j, int i){
-        Point3D pc=_p0.add(_vTo.scale(_distance)); //view plane center
+    public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
+        Point3D pc = _p0.add(_vTo.scale(_distance)); //view plane center
 
-        if(isZero(nX) || isZero(nY))
+        if (isZero(nX) || isZero(nY))
             throw new IllegalArgumentException("Pixels' number cannot be zero");
-        double Ry=_height/nY; //height of one pixel
-        double Rx=_width/nX; //width of one pixel
+        double Ry = _height / nY; //height of one pixel
+        double Rx = _width / nX; //width of one pixel
 
         //pixel's distance from pc:
-        double Xj=(j-(nX-1)/2d)*Rx;
-        double Yi=-(i-(nY-1)/2d)*Ry;
+        double Xj = (j - (nX - 1) / 2d) * Rx;
+        double Yi = -(i - (nY - 1) / 2d) * Ry;
 
-        Point3D Pij=pc;
-        if(!isZero(Xj))
-            Pij=Pij.add(_vRight.scale(Xj));
-        if(!isZero(Yi))
-            Pij=Pij.add(_vUp.scale(Yi));
+        Point3D Pij = pc;
+        if (!isZero(Xj))
+            Pij = Pij.add(_vRight.scale(Xj));
+        if (!isZero(Yi))
+            Pij = Pij.add(_vUp.scale(Yi));
 
-        Vector Vij=Pij.subtract(_p0); //Vector from the camera to the pixel
+        Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
 
-        return new Ray(_p0,Vij);
+        return new Ray(_p0, Vij);
     }
 
     //chaining methods
+
     /**
      * rotation method to the sides
+     *
      * @param angle :the degrees number to turn (positive- to the right, else to the left)
      */
-    public Camera turnToSide(double angle){
+    public Camera turnToSide(double angle) {
+        if (angle < 0) {
+            throw new IllegalArgumentException("Angle can't be negative");
+        }
+        if (angle > 360) {
+            angle = angle % 360;
+        }
 
-    return  this;
+        if (angle % 90 == 0) { //rotation on the axes of the direction vectors
+            for (int i = 0; i < (int) angle / 90; i++) {
+                _vRight=turn90(_vRight);
+            }
+            return this;
+        }
+        
+        int count = (int) angle / 90;
+        angle %= 90;
+
+        for (int i = 0; i < count; i++) {
+            _vRight=turn90(_vRight);
+        }
+        turn(angle, _vRight);
+        _vRight=_vTo.crossProduct(_vUp).normalize();
+
+        return this;
+    }
+
+    //help func to turn vTo according to vRight/vUp
+    private void turn(double angle, Vector v) {
+        double x = Math.tan(angle);
+        Point3D p = _vTo.getHead();
+        Ray r = new Ray(p, v);
+        _vTo = r.getTargetPoint(x).subtract(_p0);
+    }
+
+    //helper func to turn 90 degrees to the right
+    private Vector turn90(Vector v) {
+        _vTo = v;
+        return _vTo.crossProduct(_vUp).normalize();
     }
 
     /**
      * method of turning up and down
+     *
      * @param angle :the degrees number to turn (positive- up, else -down)
      */
-    public Camera turnUp(double angle){
+    public Camera turnUp(double angle) {
+        if (angle < 0) {
+            throw new IllegalArgumentException("Angle can't be negative");
+        }
+        if (angle > 360) {
+            angle = angle % 360;
+        }
+
+        if (angle % 90 == 0) { //rotation on the axes of the direction vectors
+            for (int i = 0; i < (int) angle / 90; i++) {
+                _vUp=turn90(_vUp);
+            }
+            return this;
+        }
+
+        int count = (int) angle / 90;
+        angle %= 90;
+
+        for (int i = 0; i < count; i++) {
+            _vUp=turn90(_vUp);
+        }
+        turn(angle, _vUp);
+        _vUp=_vTo.crossProduct(_vRight).normalize(); ////check the direction!!!!!!
+
         return this;
     }
 
     /**
      * method of zoom
+     *
      * @param dis :the distance to the desired zoom (positive- getting closer, else- zoom out)
      */
-    public Camera zoom(double dis){
-       // _p0=_p0.add(_vTo.scale(dis));
+    public Camera zoom(double dis) {
+        // _p0=_p0.add(_vTo.scale(dis));
         return this;
     }
 }
