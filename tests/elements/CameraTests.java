@@ -1,8 +1,14 @@
 package elements;
 
 import elements.Camera;
+import geometries.Sphere;
+import geometries.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.*;
+import renderer.ImageWriter;
+import renderer.RayTracerBasic;
+import renderer.Render;
+import scene.Scene;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -55,4 +61,55 @@ public class CameraTests {
 
     }
 
+    Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, -1, 0)) //
+            .setDistance(100) //
+            .setViewPlaneSize(500, 500);
+
+    Scene scene = new Scene("Test scene")//
+            .setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
+            .setBackground(new Color(75, 127, 90));
+
+    ImageWriter imageWriter = new ImageWriter("turning camera test", 1000, 1000);
+
+    Render render = new Render() //
+            .setImageWriter(imageWriter) //
+            .setScene(scene) //
+            .setCamera(camera.turnUp(90)) //
+            .setRayTracer(new RayTracerBasic(scene));
+
+    public void resetScene() {
+        scene._geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
+                new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
+                new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
+                new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left
+                new Triangle(new Point3D(100, 0, -100), new Point3D(0, -100, -100), new Point3D(100, -100, -100))); // down right
+
+        render.renderImage();
+        render.printGrid(100, new Color(java.awt.Color.YELLOW));
+        render.writeToImage();
+    }
+
+    @Test
+    public void testTurnUp(){
+        resetScene();
+    //TC01: turn to vUp
+   //     render.setCamera(camera.turnUp(90));
+     //   render.renderImage();
+
+    }
+
+    @Test
+    public void testTurnRight(){
+
+    }
+
+    @Test
+    public void testZoomIn(){
+
+    }
+
+    @Test
+    public void testRotationCombination(){
+
+    }
 }

@@ -12,7 +12,7 @@ import static primitives.Util.isZero;
  * It also contains data about the view plane: it's height and width and the distance from the camera.
  */
 public class Camera {
-    final Point3D _p0;
+    private Point3D _p0;
     private Vector _vUp; //enable rotation
     private Vector _vTo;
     private Vector _vRight;
@@ -109,6 +109,9 @@ public class Camera {
      * @param angle :the degrees number to turn (positive- to the right, else to the left)
      */
     public Camera turnToSide(double angle) {
+        if (angle == 0) {
+            return this;
+        }
         if (angle < 0) {
             throw new IllegalArgumentException("Angle can't be negative");
         }
@@ -135,7 +138,7 @@ public class Camera {
         return this;
     }
 
-    //help func to turn vTo according to vRight/vUp
+    //help func to turn vTo according to v (vRight/vUp)
     private void turn(double angle, Vector v) {
         double x = Math.tan(angle);
         Point3D p = _vTo.getHead();
@@ -146,7 +149,11 @@ public class Camera {
     //helper func to turn 90 degrees to the right
     private Vector turn90(Vector v) {
         _vTo = v;
-        return _vTo.crossProduct(_vUp).normalize();
+        if(v==_vRight)
+            return _vTo.crossProduct(_vUp).normalize();
+         if(v==_vUp)
+            return _vRight.crossProduct(_vTo).normalize();
+         throw new IllegalArgumentException("get just vRight or vUp");
     }
 
     /**
@@ -155,6 +162,9 @@ public class Camera {
      * @param angle :the degrees number to turn (positive- up, else -down)
      */
     public Camera turnUp(double angle) {
+        if (angle == 0) {
+            return this;
+        }
         if (angle < 0) {
             throw new IllegalArgumentException("Angle can't be negative");
         }
@@ -187,7 +197,14 @@ public class Camera {
      * @param dis :the distance to the desired zoom (positive- getting closer, else- zoom out)
      */
     public Camera zoom(double dis) {
-        // _p0=_p0.add(_vTo.scale(dis));
+        if(dis>0)
+        _p0=_p0.add(_vTo.scale(dis));
+        else
+            if(dis<0){ //reverse vector
+            Ray r=new Ray(_p0, _vTo);
+            Vector v=_p0.subtract(r.getTargetPoint(1));
+            _p0=_p0.add(v.scale(Math.abs(dis)));
+        }
         return this;
     }
 }
