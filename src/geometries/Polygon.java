@@ -9,7 +9,7 @@ import static primitives.Util.*;
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
  * system
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -128,9 +128,12 @@ public class Polygon implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        if(isInside(ray))
-            return plane.findIntersections(ray);
-        return null;    }
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        if(isInside(ray)){
+            Point3D planePoint=plane.findGeoIntersections(ray).get(0).point;
+            return List.of(new GeoPoint(this, planePoint));
+        }
+        return null;
+    }
 }
 

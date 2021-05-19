@@ -4,15 +4,14 @@ import primitives.Color;
 /**
  * The class represents an ambient light for scene, by its color and intensity
  */
-public class AmbientLight {
-    //one field for the color at the desired intensity
-    final private Color _intensity;
+public class AmbientLight extends Light {
 
-    public AmbientLight(Color Ia, double Ka) {
-        _intensity = Ia.scale(Ka);
+    //default c-tor, reset black background
+    public AmbientLight() {
+        super(Color.BLACK);
     }
 
-    public Color getIntensity() {
-        return _intensity;
+    public AmbientLight(Color Ia, double Ka) {
+        super(Ia.scale(Ka));
     }
 }

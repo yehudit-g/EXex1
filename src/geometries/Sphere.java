@@ -13,22 +13,17 @@ import static primitives.Util.isZero;
  * Sphere class represents 3D sphere in Cartesian coordinate system
  * by 3D center point and radius length
  */
-public class Sphere implements Geometry {
+public class Sphere extends RadialGeometry {
 
     Point3D center;
-    double radius;
 
     public Sphere(Point3D center, double radius) {
+        super(radius);
         this.center = center;
-        this.radius = radius;
     }
 
     public Point3D getCenter() {
         return center;
-    }
-
-    public double getRadius() {
-        return radius;
     }
 
     @Override
@@ -40,16 +35,16 @@ public class Sphere implements Geometry {
     public String toString() {
         return "Sphere{" +
                 "center=" + center +
-                ", radius=" + radius +
+                ", radius=" + getRadius() +
                 '}';
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         Point3D P0=ray.getP0();
         Vector v=ray.getDir();
         if(getCenter().equals(P0))
-            return List.of(P0.add(v.scale(getRadius())));
+            return List.of(new GeoPoint(this, P0.add(v.scale(getRadius()))));
         Vector u=getCenter().subtract(P0);
         double tm=v.dotProduct(u);
         double d=alignZero( Math.sqrt(u.lengthSquared()-tm*tm));
@@ -65,12 +60,12 @@ public class Sphere implements Geometry {
         double p2=alignZero(tm+th);
         //2 intersections
         if(p1>0&&p2>0)
-            return List.of(ray.getTargetPoint(p1),ray.getTargetPoint(p2));
+            return List.of(new GeoPoint(this,ray.getTargetPoint(p1)),new GeoPoint(this, ray.getTargetPoint(p2)));
         //Ray starts inside the sphere
         if(p1>0)
-            return List.of(ray.getTargetPoint(p1));
+            return List.of(new GeoPoint(this, ray.getTargetPoint(p1)));
         if(p2>0)
-            return List.of(ray.getTargetPoint(p2));
+            return List.of(new GeoPoint(this,ray.getTargetPoint(p2)));
         return null;
     }
 }

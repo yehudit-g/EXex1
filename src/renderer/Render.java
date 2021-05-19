@@ -4,23 +4,16 @@ import elements.Camera;
 import jdk.jshell.spi.ExecutionControl;
 import primitives.Color;
 import primitives.Ray;
-import scene.Scene;
 
 import java.util.MissingResourceException;
 
 public class Render {
     public ImageWriter _imageWriter;
-    public Scene _scene;
     public Camera _camera;
-    public RayTracerBasic _rayTracer;
+    public BasicRayTracer _rayTracer;
 
     public Render setImageWriter(ImageWriter imageWriter) {
         _imageWriter = imageWriter;
-        return this;
-    }
-
-    public Render setScene(Scene scene) {
-        _scene = scene;
         return this;
     }
 
@@ -29,7 +22,7 @@ public class Render {
         return this;
     }
 
-    public Render setRayTracer(RayTracerBasic rayTracer) {
+    public Render setRayTracer(BasicRayTracer rayTracer) {
         _rayTracer = rayTracer;
         return this;
     }
@@ -43,9 +36,7 @@ public class Render {
             throw new MissingResourceException("", "Render", "_camera");
         if (_imageWriter == null)
             throw new MissingResourceException("", "Render", "_imageWriter");
-        if (_scene == null)
-            throw new MissingResourceException("", "Render", "_scene");
-        if (_rayTracer == null)
+      if (_rayTracer == null)
             throw new MissingResourceException("", "Render", "_rayTracer");
         //throw new ExecutionControl.NotImplementedException("");
         Ray ray;

@@ -38,10 +38,10 @@ public class Geometries implements Intersectable {
 //    }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> result=null;
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        List<GeoPoint> result=null;
         for(Intersectable element: intersectable){
-            List<Point3D>elemList= element.findIntersections(ray);
+            List<GeoPoint>elemList= element.findGeoIntersections(ray);
             if(elemList!=null){
                 if(result==null){
                     result=new LinkedList<>();
@@ -51,4 +51,5 @@ public class Geometries implements Intersectable {
         }
         return result;
     }
+
 }

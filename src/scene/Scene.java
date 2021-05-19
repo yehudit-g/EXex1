@@ -1,36 +1,47 @@
 package scene;
 
 import elements.AmbientLight;
+import elements.LightSource;
 import geometries.Geometries;
 import primitives.Color;
+
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * The class represents a 3D scene
  * by it's name, background color, light sources and geometric bodies
  */
 public class Scene {
-    public final String _name;
-    public Color _background;
-    public AmbientLight _ambientLight;
-    public Geometries _geometries;
+    private  final String _name;
+    public Color background =Color.BLACK;
+    public AmbientLight ambientLight =new AmbientLight();
+    public Geometries geometries;
+    public List<LightSource> lights =new LinkedList<>();
 
     public Scene(String name) {
         _name = name;
-        _geometries=new Geometries();
+        geometries =new Geometries();
+    }
+
+    public Scene setLights(List<LightSource> lights) {
+        this.lights = lights;
+        return this;
     }
 
     //chaining methods
     public Scene setBackground(Color background) {
-        _background = background;
+        this.background = background;
         return this;
     }
 
     public Scene setAmbientLight(AmbientLight ambientLight) {
-        _ambientLight = ambientLight;
+        this.ambientLight = ambientLight;
         return this;
     }
 
     public Scene setGeometries(Geometries geometries) {
-        _geometries = geometries;
+        this.geometries = geometries;
         return this;
     }
 }

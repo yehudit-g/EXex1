@@ -1,12 +1,11 @@
 package elements;
 
-import elements.Camera;
 import geometries.Sphere;
 import geometries.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.*;
 import renderer.ImageWriter;
-import renderer.RayTracerBasic;
+import renderer.BasicRayTracer;
 import renderer.Render;
 import scene.Scene;
 
@@ -73,12 +72,11 @@ public class CameraTests {
 
     Render render = new Render() //
             .setImageWriter(imageWriter) //
-            .setScene(scene) //
             .setCamera(camera.turnUp(90)) //
-            .setRayTracer(new RayTracerBasic(scene));
+            .setRayTracer(new BasicRayTracer(scene));
 
     public void resetScene() {
-        scene._geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
+        scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
                 new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left

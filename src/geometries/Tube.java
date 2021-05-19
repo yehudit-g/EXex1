@@ -10,27 +10,22 @@ import java.util.List;
  * Tube class represents a tube in 3D Cartesian coordinate system
  * by central axis ray and the radius length
  */
-public class Tube implements Geometry {
+public class Tube extends RadialGeometry {
     Ray axisRay;
-    double radius;
 
     public Tube(Ray axisRay, double radius) {
+        super(radius);
         this.axisRay = axisRay;
-        this.radius = radius;
     }
 
     public Ray getAxisRay() {
         return axisRay;
     }
 
-    public double getRadius() {
-        return radius;
-    }
-
     @Override
     public Vector getNormal(Point3D p) {
-        double t=axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
-        Point3D o=axisRay.getP0().add(axisRay.getDir().scale(t));
+        double t = axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
+        Point3D o = axisRay.getP0().add(axisRay.getDir().scale(t));
         return (p.subtract(o)).normalize();
     }
 
@@ -43,7 +38,7 @@ public class Tube implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         return null;
     }
 }
