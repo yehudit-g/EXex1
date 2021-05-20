@@ -1,5 +1,9 @@
 package primitives;
 
+/**
+ * The class used to describe bodies' material in a scene
+ * by its shininess, opacity and reflection
+ */
 public class Material {
     public double Kd=0d;
     public double Ks=0d;

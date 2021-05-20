@@ -6,11 +6,16 @@ import primitives.Color;
  */
 public class AmbientLight extends Light {
 
-    //default c-tor, reset black background
+    /**
+     * default c-tor. reset black background
+     */
     public AmbientLight() {
         super(Color.BLACK);
     }
 
+    /**
+     * c-tor
+     */
     public AmbientLight(Color Ia, double Ka) {
         super(Ia.scale(Ka));
     }

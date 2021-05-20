@@ -5,15 +5,13 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- *
+ * The class represents a spot light in 3D scene
  */
 public class SpotLight extends PointLight {
-    /**
-     *
-     */
     private final Vector _direction;
 
     /**
+     * c-tor
      * @param intensity
      * @param position
      * @param direction
@@ -23,11 +21,6 @@ public class SpotLight extends PointLight {
         _direction = direction.normalized();
     }
 
-    /**
-     *
-     * @param p
-     * @return
-     */
     @Override
     public Color getIntensity(Point3D p) {
         Color baseIntensity = super.getIntensity(p);

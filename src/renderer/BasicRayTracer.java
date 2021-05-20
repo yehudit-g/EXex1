@@ -44,11 +44,16 @@ public class BasicRayTracer extends RayTracerBase {
                 .add(calcLocalEffects(gp, ray));
     }
 
+    /**
+     * @param gp - the asked GeoPoint
+     * @param ray - from the camera, that crosses at gp
+     * @return the color created by the light sources in specific point
+     */
     private Color calcLocalEffects(GeoPoint gp, Ray ray) {
         Vector v = ray.getDir();
         Vector n = gp.geometry.getNormal(gp.point);
         double nv = alignZero(n.dotProduct(v));
-        if (nv == 0) {
+        if (nv == 0) { //the geometry is invisible in gp
             return Color.BLACK;
         }
         Material material = gp.geometry.getMaterial();
@@ -73,6 +78,14 @@ public class BasicRayTracer extends RayTracerBase {
         return color;
     }
 
+    /**
+     * @param ks of the geometry's material
+     * @param l - the light direction
+     * @param n - geometry's normal
+     * @param v - the ray direction
+     * @param nShininess of the geometry's material
+     * @return the speculation level
+     */
     private double calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess) {
         double ln=l.dotProduct(n);
         Vector r=l.add(n.scale(ln*-2));
@@ -80,6 +93,12 @@ public class BasicRayTracer extends RayTracerBase {
         return ks*Math.max(0, Math.pow(minusVR, nShininess));
     }
 
+    /**
+     * @param kd of the material
+     * @param l - the light direction
+     * @param n - geometry's normal
+     * @return the diffuse level
+     */
     private double calcDiffusive(double kd, Vector l, Vector n) {
         double ln = Math.abs(l.dotProduct(n));
         return kd * ln;

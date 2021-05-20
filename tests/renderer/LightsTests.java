@@ -8,7 +8,6 @@ import scene.Scene;
 
 /**
  * Test rendering a basic image
- *
  * @author Dan
  */
 public class LightsTests {
@@ -73,7 +72,6 @@ public class LightsTests {
         scene1.geometries.add(sphere);
         scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Point3D(-50, -50, 50), new Vector(1, 1, -2)) //
                 .setKl(0.00001).setKq(0.00000001));
-
         ImageWriter imageWriter = new ImageWriter("lightSphereSpot", 500, 500);
         Render render = new Render()//
                 .setImageWriter(imageWriter) //
@@ -139,6 +137,9 @@ public class LightsTests {
         render.writeToImage();
     }
 
+    /**
+     * Produce a picture of two triangles lighted by all kinds of light
+     */
     @Test
     public void triangleManyLights() {
         scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
@@ -154,6 +155,27 @@ public class LightsTests {
                 .setImageWriter(imageWriter) //
                 .setCamera(camera2) //
                 .setRayTracer(new BasicRayTracer(scene2));
+        render.renderImage();
+        render.writeToImage();
+    }
+
+    /**
+     * Produce a picture of a sphere lighted by all kinds of light
+     */
+    @Test
+    public void sphereManyLights() {
+        scene1.geometries.add(sphere);
+        scene1.lights.add(new DirectionalLight(new Color(500, 300, 0), new Vector(1, 1, -1)));
+        scene1.lights.add(new SpotLight(new Color(500, 300, 0), new Point3D(-50, -50, 50), new Vector(1, 1, -2)) //
+                .setKl(0.0001).setKq(0.000005));
+        scene1.lights.add(new PointLight(new Color(500, 300, 0), new Point3D(150, 150, 50))//
+                .setKl(0.00001).setKq(0.000001));
+
+        ImageWriter imageWriter = new ImageWriter("sphereManyLights", 500, 500);
+        Render render = new Render()//
+                .setImageWriter(imageWriter) //
+                .setCamera(camera1) //
+                .setRayTracer(new BasicRayTracer(scene1));
         render.renderImage();
         render.writeToImage();
     }

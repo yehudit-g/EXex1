@@ -60,6 +60,27 @@ public class Ray {
     }
 
     /**
+     * @param geoPointList - GeoPoint intersections on the ray
+     * @return the GeoPoint from the list that is the closest to p0
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList) {
+        double distance = Double.POSITIVE_INFINITY;
+        GeoPoint nearPoint = null;
+        if (geoPointList != null) {
+            for (GeoPoint geo : geoPointList) {
+                double dis = geo.point.distance(p0);
+                if (dis < distance) {
+                    distance = dis;
+                    nearPoint = geo;
+                }
+            }
+        }
+        return nearPoint;
+    }
+
+
+    /**
+     * ---for first tests only!---
      * @param point3DList intersections on the ray
      * @return the point from the list that is the closest to p0
      */
@@ -72,21 +93,6 @@ public class Ray {
                 if (dis < distance) {
                     distance = dis;
                     nearPoint = p;
-                }
-            }
-        }
-        return nearPoint;
-    }
-
-    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPointList) {
-        double distance = Double.POSITIVE_INFINITY;
-        GeoPoint nearPoint = null;
-        if (geoPointList != null) {
-            for (GeoPoint geo : geoPointList) {
-                double dis = geo.point.distance(p0);
-                if (dis < distance) {
-                    distance = dis;
-                    nearPoint = geo;
                 }
             }
         }

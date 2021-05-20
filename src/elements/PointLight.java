@@ -3,7 +3,9 @@ package elements;
 import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
-
+/**
+ * The class represents a point light in 3D scene
+ */
 public class PointLight extends Light implements LightSource {
 
     private final Point3D _position;
@@ -11,17 +13,15 @@ public class PointLight extends Light implements LightSource {
     private double _Kl = 0d;
     private double _Kq = 0d;
 
-//    public double getKc() {
-//        return _Kc;
-//    }
-//
-//    public double getKl() {
-//        return _Kl;
-//    }
-//
-//    public double getKq() {
-//        return _Kq;
-//    }
+    /**
+     * c-tor
+     * @param intensity
+     * @param position
+     */
+    public PointLight(Color intensity, Point3D position) {
+        super(intensity);
+        _position = position;
+    }
 
     public PointLight setKc(double kc) {
         _Kc = kc;
@@ -36,11 +36,6 @@ public class PointLight extends Light implements LightSource {
     public PointLight setKq(double kq) {
         _Kq = kq;
         return this;
-    }
-
-    public PointLight(Color intensity, Point3D position) {
-        super(intensity);
-        _position = position;
     }
 
     @Override

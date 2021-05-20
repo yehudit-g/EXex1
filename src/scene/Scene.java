@@ -29,17 +29,30 @@ public class Scene {
         return this;
     }
 
-    //chaining methods
+    /**
+     * setter
+     * @param background
+     * @return the scene - chaining method
+     */
     public Scene setBackground(Color background) {
         this.background = background;
         return this;
     }
-
+    /**
+     * setter
+     * @param ambientLight
+     * @return the scene - chaining method
+     */
     public Scene setAmbientLight(AmbientLight ambientLight) {
         this.ambientLight = ambientLight;
         return this;
     }
 
+    /**
+     * setter
+     * @param geometries
+     * @return the scene - chaining method
+     */
     public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
         return this;
