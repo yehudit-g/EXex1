@@ -75,7 +75,7 @@ public class BasicRayTracer extends RayTracerBase {
 
     private double calcSpecular(double ks, Vector l, Vector n, Vector v, int nShininess) {
         double ln=l.dotProduct(n);
-        Vector r=l.subtract(n.scale(ln*-2));
+        Vector r=l.add(n.scale(ln*-2));
         double minusVR=v.scale(-1).dotProduct(r);
         return ks*Math.max(0, Math.pow(minusVR, nShininess));
     }
