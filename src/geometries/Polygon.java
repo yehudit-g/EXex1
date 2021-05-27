@@ -128,9 +128,13 @@ public class Polygon extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         if(isInside(ray)){
-            Point3D planePoint=plane.findGeoIntersections(ray).get(0).point;
+            List<GeoPoint> intersect=plane.findGeoIntersections(ray, maxDistance);
+            if(intersect==null){
+                return null;
+            }
+            Point3D planePoint=intersect.get(0).point;
             return List.of(new GeoPoint(this, planePoint));
         }
         return null;

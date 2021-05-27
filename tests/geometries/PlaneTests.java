@@ -8,7 +8,6 @@ import primitives.Vector;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static primitives.Util.isZero;
 
 class PlaneTests {
     /**
@@ -102,15 +101,15 @@ class PlaneTests {
         assertEquals(null, result, "Ray doesn't cross the plane");
 
         //TC22: Ray's line is contained in the plane and start in q0 (0 points)
-        result = plane.findIntersections(new Ray(plane.getQ0(),  new Vector(0,1,0)));
+        result = plane.findIntersections(new Ray(plane.getQ0(), new Vector(0,1,0)));
         assertEquals(null, result, "Ray doesn't cross the plane");
 
         //TC23: Ray is contained in the plane and it's tail crosses q0 (0 points)
-        result = plane.findIntersections(new Ray(new Point3D(1, 2, 0),  new Vector(0,1,0)));
+        result = plane.findIntersections(new Ray(new Point3D(1, 2, 0), new Vector(0,1,0)));
         assertEquals(null, result, "Ray doesn't cross the plane");
 
         // **** Group: TC24: Ray's line is parallel to the plane, ray is orthogonal to ray start on q0 (0 points)
-        result = plane.findIntersections(new Ray(new Point3D(1, 1, 1),  new Vector(0,1,0)));
+        result = plane.findIntersections(new Ray(new Point3D(1, 1, 1), new Vector(0,1,0)));
         assertEquals(null, result, "Ray doesn't cross the plane");
     }
 }

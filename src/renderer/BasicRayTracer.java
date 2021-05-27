@@ -14,6 +14,10 @@ import java.util.List;
  * The class is responsible about the scanning rays
  */
 public class BasicRayTracer extends RayTracerBase {
+    /**
+     * Minimal shift of the beginning of the ray to avoid errors due to inaccuracy in small decimal numbers
+     */
+    private static final double DELTA = 0.1;
 
     /**
      * c-tor
@@ -65,14 +69,16 @@ public class BasicRayTracer extends RayTracerBase {
             Vector l = lightSource.getL(gp.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sign(nv)
-                Color lightIntensity = lightSource.getIntensity(gp.point);
+                if (unshaded(lightSource,l,n, gp)) {
+                    Color lightIntensity = lightSource.getIntensity(gp.point);
 //                color = color.add(lightIntensity.scale(calcDiffusive(kd, l, n)),
 //                        lightIntensity.scale(calcSpecular(ks, l, n, v, nShininess)));
-                double das = calcDiffusive(kd, l, n) + calcSpecular(ks, l, n, v, nShininess);
-                if (das != 0) {
-                    Color diffuseAndSpecular = lightIntensity.scale(das);
-                    color = color.add(diffuseAndSpecular);
-               }
+                    double das = calcDiffusive(kd, l, n) + calcSpecular(ks, l, n, v, nShininess);
+                    if (das != 0) {
+                        Color diffuseAndSpecular = lightIntensity.scale(das);
+                        color = color.add(diffuseAndSpecular);
+                    }
+                }
             }
         }
         return color;
@@ -103,4 +109,21 @@ public class BasicRayTracer extends RayTracerBase {
         double ln = Math.abs(l.dotProduct(n));
         return kd * ln;
     }
+
+    /**
+     * @param ls -light source
+     * @param l -The light direction
+     * @param n -geometry's normal
+     * @param gp -the point being tested
+     * @return true if gp is unshaded, and false if it is shaded
+     */
+    private boolean unshaded(LightSource ls, Vector l, Vector n, GeoPoint gp){
+        Ray lightRay=new Ray(gp.point, ls, n, DELTA);
+
+        List<GeoPoint> intersections=_scene.geometries
+                .findGeoIntersections(lightRay, ls.getDistance(gp.point));
+
+        return intersections==null;
+    }
+
 }

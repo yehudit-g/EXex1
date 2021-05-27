@@ -40,32 +40,36 @@ public class Sphere extends RadialGeometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
-        Point3D P0=ray.getP0();
-        Vector v=ray.getDir();
-        if(getCenter().equals(P0))
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        Point3D P0 = ray.getP0();
+        Vector v = ray.getDir();
+        if (getCenter().equals(P0))
             return List.of(new GeoPoint(this, P0.add(v.scale(getRadius()))));
-        Vector u=getCenter().subtract(P0);
-        double tm=v.dotProduct(u);
-        double d=alignZero( Math.sqrt(u.lengthSquared()-tm*tm));
+        Vector u = getCenter().subtract(P0);
+        double tm = v.dotProduct(u);
+        double d = alignZero(Math.sqrt(u.lengthSquared() - tm * tm));
         //Ray cross out of the sphere
-        if(d>getRadius())
+        if (d > getRadius())
             return null;
 
-        double th=alignZero( Math.sqrt(getRadius()*getRadius()-d*d));
+        double th = alignZero(Math.sqrt(getRadius() * getRadius() - d * d));
         //tangent
-        if(isZero(th))
+        if (isZero(th))
             return null;
-        double p1=alignZero(tm-th);
-        double p2=alignZero(tm+th);
+        double p1 = alignZero(tm - th);
+        double p2 = alignZero(tm + th);
+
+        //check if the intersections are in the given distance
+        boolean dis1 = alignZero(p1 - maxDistance) <= 0;
+        boolean dis2 = alignZero(p2 - maxDistance) <= 0;
         //2 intersections
-        if(p1>0&&p2>0)
-            return List.of(new GeoPoint(this,ray.getTargetPoint(p1)),new GeoPoint(this, ray.getTargetPoint(p2)));
+        if (p1 > 0 && p2 > 0 && dis1 && dis2)
+            return List.of(new GeoPoint(this, ray.getTargetPoint(p1)), new GeoPoint(this, ray.getTargetPoint(p2)));
         //Ray starts inside the sphere
-        if(p1>0)
+        if (p1 > 0 && dis1)
             return List.of(new GeoPoint(this, ray.getTargetPoint(p1)));
-        if(p2>0)
-            return List.of(new GeoPoint(this,ray.getTargetPoint(p2)));
+        if (p2 > 0 && dis2)
+            return List.of(new GeoPoint(this, ray.getTargetPoint(p2)));
         return null;
     }
 }

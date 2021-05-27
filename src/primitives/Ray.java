@@ -1,6 +1,6 @@
 package primitives;
 
-import geometries.Intersectable;
+import elements.LightSource;
 
 import static geometries.Intersectable.GeoPoint;
 
@@ -17,9 +17,16 @@ public class Ray {
     //the ray's direction vector
     Vector dir;
 
-    public Ray(Point3D p0, Vector dir) {
+    public Ray(Point3D p0, Vector direction) {
         this.p0 = p0;
-        this.dir = dir.normalized();
+        this.dir = direction.normalized();
+    }
+
+    public Ray(Point3D point, LightSource ls, Vector n, double delta) {
+        Vector l=ls.getL(point).scale(-1);//from gp to the light source
+        Vector del=n.scale(n.dotProduct(l)>0?delta:-delta);
+        p0 = point.add(del);
+        dir = l;
     }
 
     @Override
@@ -56,7 +63,10 @@ public class Ray {
      * @return the resulting point from the progression of t in the direction of the ray's vector
      */
     public Point3D getTargetPoint(double t) {
-        return getP0().add(getDir().scale(t));
+        if(t!=0) {
+            return getP0().add(getDir().scale(t));
+        }
+        return p0;
     }
 
     /**

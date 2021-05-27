@@ -98,7 +98,7 @@ public class Camera {
 
         Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
 
-        return new Ray(_p0, Vij);
+        return new Ray(_p0, Vij );
     }
 
     //chaining methods

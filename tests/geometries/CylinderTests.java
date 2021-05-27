@@ -15,7 +15,7 @@ public class CylinderTests {
      */
     @Test
     void getNormal() {
-        Cylinder c=new Cylinder(new Ray(new Point3D(0,0,1),new Vector(0,0,2)),1,5);
+        Cylinder c=new Cylinder(new Ray(new Point3D(0,0,1), new Vector(0,0,2)),1,5);
         // ============ Equivalence Partitions Tests ==============
         //EP1: point on the shell
         assertEquals( new Vector(1,0,0), c.getNormal(new Point3D(1, 0, 2)),"Bad normal to cylinder's shell");
