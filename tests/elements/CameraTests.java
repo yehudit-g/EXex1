@@ -76,7 +76,7 @@ public class CameraTests {
             .setRayTracer(new BasicRayTracer(scene));
 
     public void resetScene() {
-        scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
+        scene.geometries.add(new Sphere(50, new Point3D(0, 0, -100)),
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up left
                 new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
                 new Triangle(new Point3D(-100, 0, -100), new Point3D(0, -100, -100), new Point3D(-100, -100, -100)), // down left

@@ -49,23 +49,23 @@ public class CameraRayIntersectionsIntegrationTests {
     public  void CameraRaySphereIntegration(){
 
         //TC01: Small sphere (2 points)
-        Sphere sphere=new Sphere(new Point3D(0,0,-3), 1);
+        Sphere sphere=new Sphere(1, new Point3D(0,0,-3));
         countIntersections(camera1, sphere, 2);
 
         //TC02: Big sphere (18 points)
-        sphere=new Sphere(new Point3D(0,0,-2.5), 2.5);
+        sphere=new Sphere(2.5, new Point3D(0,0,-2.5));
         countIntersections(camera2, sphere, 18);
 
         //TC03: Medium sphere (10 points)
-        sphere=new Sphere(new Point3D(0,0,-2), 2);
+        sphere=new Sphere(2, new Point3D(0,0,-2));
         countIntersections(camera2, sphere, 10);
 
         //TC04: Inside sphere (9 points)
-        sphere=new Sphere(new Point3D(0,0,-1), 4);
+        sphere=new Sphere(4, new Point3D(0,0,-1));
         countIntersections(camera1, sphere, 9);
 
         // TC05: Beyond sphere (0 points)
-        sphere=new Sphere(new Point3D(0,0,1), 0.5);
+        sphere=new Sphere(0.5, new Point3D(0,0,1));
         countIntersections(camera1, sphere, 0);
 
     }

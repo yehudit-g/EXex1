@@ -12,6 +12,9 @@ import java.util.Objects;
  * by 3D beginning point and direction vector
  */
 public class Ray {
+
+    private static final double DELTA = 0.1;
+
     //the ray's beginning point
     Point3D p0;
     //the ray's direction vector
@@ -22,11 +25,16 @@ public class Ray {
         this.dir = direction.normalized();
     }
 
-    public Ray(Point3D point, LightSource ls, Vector n, double delta) {
-        Vector l=ls.getL(point).scale(-1);//from gp to the light source
-        Vector del=n.scale(n.dotProduct(l)>0?delta:-delta);
-        p0 = point.add(del);
-        dir = l;
+    /**
+     * Ray constructor ith offset normal vector
+     * @param point original point - will be offset by the normal
+     * @param direction vector of the ray dirction
+     * @param n normal vector
+     */
+    public Ray(Point3D point, Vector direction, Vector n) {
+        Vector delta = n.scale(n.dotProduct(direction) > 0 ? DELTA : -DELTA);
+        p0 = point.add(delta);
+        dir = direction.normalized();
     }
 
     @Override
@@ -63,7 +71,7 @@ public class Ray {
      * @return the resulting point from the progression of t in the direction of the ray's vector
      */
     public Point3D getTargetPoint(double t) {
-        if(t!=0) {
+        if (t != 0) {
             return getP0().add(getDir().scale(t));
         }
         return p0;
@@ -91,6 +99,7 @@ public class Ray {
 
     /**
      * ---for first tests only!---
+     *
      * @param point3DList intersections on the ray
      * @return the point from the list that is the closest to p0
      */
