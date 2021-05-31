@@ -5,8 +5,8 @@ package primitives;
  * by its shininess, opacity and reflection
  */
 public class Material {
-    public double Kd=0d;
-    public double Ks=0d;
+    public double Kd=0d;        // diffuse
+    public double Ks=0d;        //specular
     public int nShininess=0;
     /**
      *  Promote transparency

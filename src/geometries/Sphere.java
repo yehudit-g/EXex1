@@ -15,26 +15,26 @@ import static primitives.Util.isZero;
  */
 public class Sphere extends RadialGeometry {
 
-    Point3D center;
+    private final Point3D _center;
 
     public Sphere(double radius, Point3D center) {
         super(radius);
-        this.center = center;
+        _center = center;
     }
 
     public Point3D getCenter() {
-        return center;
+        return _center;
     }
 
     @Override
     public Vector getNormal(Point3D p) {
-        return p.subtract(getCenter()).normalize();
+        return p.subtract(_center).normalize();
     }
 
     @Override
     public String toString() {
         return "Sphere{" +
-                "center=" + center +
+                "center=" + _center +
                 ", radius=" + getRadius() +
                 '}';
     }
@@ -43,19 +43,23 @@ public class Sphere extends RadialGeometry {
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         Point3D P0 = ray.getP0();
         Vector v = ray.getDir();
-        if (getCenter().equals(P0))
-            return List.of(new GeoPoint(this, P0.add(v.scale(getRadius()))));
-        Vector u = getCenter().subtract(P0);
+
+        if (_center.equals(P0))
+            return List.of(new GeoPoint(this, P0.add(v.scale(_radius))));
+
+        Vector u = _center.subtract(P0);
         double tm = v.dotProduct(u);
         double d = alignZero(Math.sqrt(u.lengthSquared() - tm * tm));
+
         //Ray cross out of the sphere
-        if (d > getRadius())
+        if (alignZero(d - _radius) > 0)
             return null;
 
-        double th = alignZero(Math.sqrt(getRadius() * getRadius() - d * d));
+        double th = alignZero(Math.sqrt(_radius * _radius - d * d));
         //tangent
         if (isZero(th))
             return null;
+
         double p1 = alignZero(tm - th);
         double p2 = alignZero(tm + th);
 
@@ -64,7 +68,10 @@ public class Sphere extends RadialGeometry {
         boolean dis2 = alignZero(p2 - maxDistance) <= 0;
         //2 intersections
         if (p1 > 0 && p2 > 0 && dis1 && dis2)
-            return List.of(new GeoPoint(this, ray.getTargetPoint(p1)), new GeoPoint(this, ray.getTargetPoint(p2)));
+            return List.of(
+                    new GeoPoint(this, ray.getTargetPoint(p1)),
+                    new GeoPoint(this, ray.getTargetPoint(p2))
+            );
         //Ray starts inside the sphere
         if (p1 > 0 && dis1)
             return List.of(new GeoPoint(this, ray.getTargetPoint(p1)));

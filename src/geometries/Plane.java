@@ -15,43 +15,43 @@ import static primitives.Util.isZero;
  */
 public class Plane extends Geometry {
 
-    Point3D q0;
-    Vector normal;
+    private final Point3D _q0;
+    private final Vector _normal;
 
     public Plane(Point3D q0, Vector normal) {
-        this.q0 = q0;
-        this.normal = normal.normalize();
+        _q0 = q0;
+        _normal = normal.normalize();
     }
 
     public Plane(Point3D p1, Point3D p2, Point3D p3) {
-        this.q0 = p1;
-        //create 2 vectors on the plane
-        Vector U = p2.subtract(p1);
-        Vector V = p3.subtract(p1);
-        //calculate the normal vector by cross product
-        Vector N = U.crossProduct(V);
+        _q0 = p1;
 
-        this.normal = N.normalize();
+        //create 2 vectors on the plane
+        Vector U = p1.subtract(p2);
+        Vector V = p1.subtract(p3);
+
+        //calculate the normal vector by cross product
+        _normal = U.crossProduct(V).normalize();
     }
 
     @Override
     public Vector getNormal(Point3D p) {
-        return normal;
+        return _normal;
     }
 
     public Point3D getQ0() {
-        return q0;
+        return _q0;
     }
 
     public Vector getNormal() {
-        return normal;
+        return _normal;
     }
 
     @Override
     public String toString() {
         return "Plane{" +
-                "q0=" + q0 +
-                ", normal=" + normal +
+                "q0=" + _q0 +
+                ", normal=" + _normal +
                 '}';
     }
 
@@ -65,12 +65,14 @@ public class Plane extends Geometry {
         if (Q0.equals(P0))
             return null;
 
-        double nv = getNormal().dotProduct(v);
+        double nv = _normal.dotProduct(v);
         //Ray contained in the plane
         if (isZero(nv))
             return null;
 
-        double t = alignZero(getNormal().dotProduct(Q0.subtract(P0)) / nv);
+        Vector PQ =Q0.subtract(P0);
+
+        double t = alignZero(_normal.dotProduct(PQ) / nv);
         if (t > 0 && alignZero(t - maxDistance) <= 0) {
             Point3D p = ray.getTargetPoint(t);
             return List.of(new GeoPoint(this, p));

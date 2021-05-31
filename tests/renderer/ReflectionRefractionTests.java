@@ -93,16 +93,26 @@ public class ReflectionRefractionTests {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.geometries.add( //
-                new Triangle(new Point3D(-150, -150, -115), new Point3D(150, -150, -135), new Point3D(75, 75, -150)) //
+                new Triangle(
+                        new Point3D(-150, -150, -115),
+                        new Point3D(150, -150, -135),
+                        new Point3D(75, 75, -150))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
-                new Triangle(new Point3D(-150, -150, -115), new Point3D(-70, 70, -140), new Point3D(75, 75, -150)) //
+                new Triangle(
+                        new Point3D(-150, -150, -115),
+                        new Point3D(-70, 70, -140),
+                        new Point3D(75, 75, -150))
                         .setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
                 new Sphere(30, new Point3D(60, 50, -50)) //
                         .setEmission(new Color(java.awt.Color.BLUE)) //
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)));
 
-        scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(60, 50, 0), new Vector(0, 0, -1)) //
-                .setKl(4E-5).setKq(2E-7));
+        scene.lights.add(
+                new SpotLight(
+                        new Color(700, 400, 400),
+                        new Point3D(60, 50, 0),
+                        new Vector(0, 0, -1)) //
+                        .setKl(4E-5).setKq(2E-7));
 
         ImageWriter imageWriter = new ImageWriter("refractionShadow", 600, 600);
         Render render = new Render() //
@@ -144,15 +154,15 @@ public class ReflectionRefractionTests {
 
         scene.geometries.add(pyramid,
                 new Sphere(15, new Point3D(50, 30, -5))
-                     .setEmission(new Color(java.awt.Color.green))
+                        .setEmission(new Color(java.awt.Color.green))
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
-                new Plane(new Point3D(300, 0, 0), new Point3D(0, 500, 0),new Point3D(0, 500, 1))
+                new Plane(new Point3D(300, 0, 0), new Point3D(0, 500, 0), new Point3D(0, 500, 1))
                         .setEmission(new Color(java.awt.Color.gray))
                         .setMaterial(new Material().setKr(0.8)),
-                new Plane(new Point3D(300, 0, 0), new Point3D(0, -500, 0),new Point3D(0, -500, 1))
+                new Plane(new Point3D(300, 0, 0), new Point3D(0, -500, 0), new Point3D(0, -500, 1))
                         .setEmission(new Color(java.awt.Color.BLACK))
                         .setMaterial(new Material().setKr(0.8))
-                );
+        );
 //                new Polygon(new Point3D(100, 0, 0), new Point3D(80, 0, 0), new Point3D(80, 20, 0), new Point3D(100, 20, 0)) //
 //                        .setEmission(new Color(java.awt.Color.BLUE)) //
 //                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))),

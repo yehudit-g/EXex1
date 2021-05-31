@@ -1,13 +1,13 @@
 package geometries;
 
 abstract  class RadialGeometry extends Geometry {
-   protected final double radius;
+   protected final double _radius;
 
-    RadialGeometry(double radius) {
-        this.radius = radius;
+    protected RadialGeometry(double radius) {
+        _radius = radius;
     }
 
     public double getRadius() {
-        return radius;
+        return _radius;
     }
 }

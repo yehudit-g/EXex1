@@ -1,11 +1,8 @@
 package primitives;
 
-import elements.LightSource;
-
 import static geometries.Intersectable.GeoPoint;
 
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Class Ray represents a ray in Cartesian coordinate system
@@ -16,13 +13,13 @@ public class Ray {
     private static final double DELTA = 0.1;
 
     //the ray's beginning point
-    Point3D p0;
+    private final Point3D _p0;
     //the ray's direction vector
-    Vector dir;
+    private final Vector _dir;
 
     public Ray(Point3D p0, Vector direction) {
-        this.p0 = p0;
-        this.dir = direction.normalized();
+        _p0 = p0;
+        _dir = direction.normalized();
     }
 
     /**
@@ -31,10 +28,11 @@ public class Ray {
      * @param direction vector of the ray dirction
      * @param n normal vector
      */
-    public Ray(Point3D point, Vector direction, Vector n) {
-        Vector delta = n.scale(n.dotProduct(direction) > 0 ? DELTA : -DELTA);
-        p0 = point.add(delta);
-        dir = direction.normalized();
+    public Ray(Point3D point, Vector direction, Vector normal) {
+        double offset = normal.dotProduct(direction) > 0 ? DELTA : -DELTA;
+        Vector delta = normal.scale(offset);
+        _p0 = point.add(delta);
+        _dir = direction.normalized();
     }
 
     @Override
@@ -42,28 +40,23 @@ public class Ray {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ray ray = (Ray) o;
-        return p0.equals(ray.p0) && dir.equals(ray.dir);
+        return _p0.equals(ray._p0) && _dir.equals(ray._dir);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(p0, dir);
-    }
-
-    @Override
+   @Override
     public String toString() {
         return "Ray{" +
-                "p0=" + p0 +
-                ", direction " + dir +
+                "p0=" + _p0 +
+                ", direction " + _dir +
                 '}';
     }
 
     public Point3D getP0() {
-        return p0;
+        return _p0;
     }
 
     public Vector getDir() {
-        return dir;
+        return _dir;
     }
 
     /**
@@ -74,7 +67,7 @@ public class Ray {
         if (t != 0) {
             return getP0().add(getDir().scale(t));
         }
-        return p0;
+        return _p0;
     }
 
     /**
@@ -86,7 +79,7 @@ public class Ray {
         GeoPoint nearPoint = null;
         if (geoPointList != null) {
             for (GeoPoint geo : geoPointList) {
-                double dis = geo.point.distance(p0);
+                double dis = geo.point.distance(_p0);
                 if (dis < distance) {
                     distance = dis;
                     nearPoint = geo;
@@ -108,7 +101,7 @@ public class Ray {
         Point3D nearPoint = null;
         if (point3DList != null) {
             for (Point3D p : point3DList) {
-                double dis = p.distance(p0);
+                double dis = p.distance(_p0);
                 if (dis < distance) {
                     distance = dis;
                     nearPoint = p;

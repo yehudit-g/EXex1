@@ -28,7 +28,7 @@ public class Cylinder extends Tube {
         return "Cylinder{" +
                 "height=" + height +
                 ", axisRay=" + axisRay +
-                ", radius=" + radius +
+                ", radius=" + _radius +
                 '}';
     }
 
@@ -36,7 +36,7 @@ public class Cylinder extends Tube {
     public Vector getNormal(Point3D p) {
         double t=axisRay.getDir().dotProduct(p.subtract(axisRay.getP0()));
         Point3D o=axisRay.getP0().add(axisRay.getDir().scale(t));
-        if(p.subtract(o).length()==radius) {
+        if(p.subtract(o).length()== _radius) {
                 return super.getNormal(p);
         }
         return axisRay.getDir().normalized(); //add checking if top or bottom!

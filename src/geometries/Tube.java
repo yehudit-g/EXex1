@@ -33,7 +33,7 @@ public class Tube extends RadialGeometry {
     public String toString() {
         return "Tube{" +
                 "axisRay=" + axisRay +
-                ", radius=" + radius +
+                ", radius=" + _radius +
                 '}';
     }
 
