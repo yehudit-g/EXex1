@@ -130,7 +130,7 @@ public class ReflectionRefractionTests {
      */
     @Test
     public void effectsPresentation() {
-        Camera camera = new Camera(new Point3D(-250, 30, 5), new Vector(1, 0, 0), new Vector(0, 0, 1)) //
+        Camera camera = new Camera(new Point3D(-350, 30, 5), new Vector(1, 0, 0), new Vector(0, 0, 1)) //
                 .setViewPlaneSize(200, 200).setDistance(1000);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
@@ -156,12 +156,13 @@ public class ReflectionRefractionTests {
                 new Sphere(15, new Point3D(50, 30, -5))
                         .setEmission(new Color(java.awt.Color.green))
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
-                new Plane(new Point3D(300, 0, 0), new Point3D(0, 500, 0), new Point3D(0, 500, 1))
+                new Polygon( new Point3D(110, 0, 80), new Point3D(110, 0, -20),
+                        new Point3D(50, 100, -20), new Point3D(50, 100, 80))
                         .setEmission(new Color(java.awt.Color.gray))
-                        .setMaterial(new Material().setKr(0.8)),
-                new Plane(new Point3D(300, 0, 0), new Point3D(0, -500, 0), new Point3D(0, -500, 1))
-                        .setEmission(new Color(java.awt.Color.BLACK))
-                        .setMaterial(new Material().setKr(0.8))
+                        .setMaterial(new Material().setKr(0.6)) ,
+                new Triangle(new Point3D(110, 0, -20), new Point3D(110, 0, 80), new Point3D(50, -50, -20))
+                        .setEmission(new Color(20, 20, 20))
+                        .setMaterial(new Material().setKr(1))
         );
 //                new Polygon(new Point3D(100, 0, 0), new Point3D(80, 0, 0), new Point3D(80, 20, 0), new Point3D(100, 20, 0)) //
 //                        .setEmission(new Color(java.awt.Color.BLUE)) //
