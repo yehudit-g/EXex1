@@ -9,7 +9,9 @@ import java.util.List;
  * by 3D beginning point and direction vector
  */
 public class Ray {
-
+    /**
+     * Minimal shift of the beginning of the ray to avoid errors due to inaccuracy in small decimal numbers
+     */
     private static final double DELTA = 0.1;
 
     //the ray's beginning point
@@ -17,6 +19,7 @@ public class Ray {
     //the ray's direction vector
     private final Vector _dir;
 
+    //c-tor
     public Ray(Point3D p0, Vector direction) {
         _p0 = p0;
         _dir = direction.normalized();
@@ -26,7 +29,7 @@ public class Ray {
      * Ray constructor ith offset normal vector
      * @param point original point - will be offset by the normal
      * @param direction vector of the ray dirction
-     * @param n normal vector
+     * @param normal normal vector
      */
     public Ray(Point3D point, Vector direction, Vector normal) {
         double offset = normal.dotProduct(direction) > 0 ? DELTA : -DELTA;

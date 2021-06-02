@@ -14,17 +14,15 @@ import java.util.List;
  * The class is responsible about the scanning rays
  */
 public class BasicRayTracer extends RayTracerBase {
-    /**
-     * Minimal shift of the beginning of the ray to avoid errors due to inaccuracy in small decimal numbers
-     */
-
+    //The Max recursion level for color calculation
     private static final int MAX_CALC_COLOR_LEVEL = 10;
+    //The minimum power of the effect(according to K), to continue the recursion
     private static final double MIN_CALC_COLOR_K = 0.001;
+    //The attenuation coefficient. increases in each recursion call.
     private static final double INITIAL_K = 1.0;
 
     /**
      * c-tor
-     *
      * @param scene
      */
     public BasicRayTracer(Scene scene) {
@@ -39,64 +37,38 @@ public class BasicRayTracer extends RayTracerBase {
         return calcColor(closestPoint, ray);
     }
 
+    /**
+     * @param ray
+     * @return the closest GeoPoint that intersects the ray
+     */
     private GeoPoint findClosestIntersectionPoint(Ray ray) {
         List<GeoPoint> geoList = _scene.geometries.findGeoIntersections(ray);
         return ray.findClosestGeoPoint(geoList);
     }
 
-
+    /**
+     * Wrapping function for color-calculation
+     * @param geopoint
+     * @param ray
+     * @return the color of geopoint, including environmental effects
+     */
     private Color calcColor(GeoPoint geopoint, Ray ray) {
         return calcColor(geopoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
                 .add(_scene.ambientLight.getIntensity());
     }
 
+    /**
+     * @param geopoint
+     * @param ray
+     * @param level
+     * @param k
+     * @return the color of geopoint, including environmental effects
+     */
     private Color calcColor(GeoPoint geopoint, Ray ray, int level, double k) {
         Color color = geopoint.geometry.getEmission();
         color = color.add(calcLocalEffects(geopoint, ray, k));
         return 1 == level ? color : color.add(calcGlobalEffects(geopoint, ray.getDir(), level, k));
     }
-
-    private Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k) {
-        //Vector v = ray.getDir();
-        Vector n = gp.geometry.getNormal(gp.point);
-        Color color = Color.BLACK;
-        Material material = gp.geometry.getMaterial();
-        double kkr = k * material.Kr;
-        if (kkr > MIN_CALC_COLOR_K)
-            color =  calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.Kr, kkr);
-        double kkt = k * material.Kt;
-        if (kkt > MIN_CALC_COLOR_K)
-            color = color.add(
-                    calcGlobalEffect(constructRefractedRay(gp.point, v, n), level, material.Kt, kkt));
-        return color;
-    }
-
-    private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
-        GeoPoint gp = findClosestIntersectionPoint(ray);
-        Color color = (gp == null ? _scene.background : calcColor(gp, ray, level - 1, kkx));
-        return color.scale(kx);
-    }
-
-    private Ray constructRefractedRay(Point3D point, Vector v, Vector n) {
-        return new Ray(point, v, n);
-    }
-
-    private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
-        Vector r = v.subtract(n.scale(v.dotProduct(n) * 2d));
-        return new Ray(point, r, n);
-    }
-
-    /**
-     * @param gp - point in the
-     * @return the color of p
-     */
-//    public Color calcColor(GeoPoint gp, Ray ray) {
-//        return _scene.ambientLight.getIntensity()
-//                .add(gp.geometry.getEmission())
-//                // add calculated light contribution from all light sources)
-//                .add(calcLocalEffects(gp, ray));
-//    }
-
 
     /**
      * @param gp  - the asked GeoPoint
@@ -129,6 +101,63 @@ public class BasicRayTracer extends RayTracerBase {
             }
         }
         return color;
+    }
+
+    /**
+     * calls the recursive function of global effects calculation
+     * @param gp
+     * @param v -the ray direction
+     * @param level -the recurse level
+     * @param k -the attenuation coefficient
+     * @return the color of reflection and refraction effects
+     */
+    private Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k) {
+        Vector n = gp.geometry.getNormal(gp.point);
+        Color color = Color.BLACK;
+        Material material = gp.geometry.getMaterial();
+        double kkr = k * material.Kr;
+        if (kkr > MIN_CALC_COLOR_K)
+            color =  calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.Kr, kkr);
+        double kkt = k * material.Kt;
+        if (kkt > MIN_CALC_COLOR_K)
+            color = color.add(
+                    calcGlobalEffect(constructRefractedRay(gp.point, v, n), level, material.Kt, kkt));
+        return color;
+    }
+
+    /**
+     * @param ray
+     * @param level
+     * @param kx
+     * @param kkx
+     * @return the color of reflection and refraction effects
+     */
+    private Color calcGlobalEffect(Ray ray, int level, double kx, double kkx) {
+        GeoPoint gp = findClosestIntersectionPoint(ray);
+        Color color = (gp == null ? _scene.background : calcColor(gp, ray, level - 1, kkx));
+        return color.scale(kx);
+    }
+
+    /**
+     * @param point
+     * @param v -the original ray direction
+     * @param n -the geometry(which intersects the ray), for the DELTA moving
+     * @return a refracted ray
+     */
+    private Ray constructRefractedRay(Point3D point, Vector v, Vector n) {
+        return new Ray(point, v, n);
+    }
+
+    /**
+     *
+     * @param point
+     * @param v -the original ray direction
+     * @param n -the geometry(which intersects the ray), for the DELTA moving
+     * @return a reflected ray
+     */
+    private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
+        Vector r = v.subtract(n.scale(v.dotProduct(n) * 2d));
+        return new Ray(point, r, n);
     }
 
     /**
@@ -177,7 +206,6 @@ public class BasicRayTracer extends RayTracerBase {
             }
         }
         return true;
-        //   return intersections==null;
     }
 
     /**
