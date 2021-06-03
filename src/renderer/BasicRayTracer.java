@@ -37,6 +37,18 @@ public class BasicRayTracer extends RayTracerBase {
         return calcColor(closestPoint, ray);
     }
 
+    //for beam of rays
+    @Override
+    public Color traceRay(List<Ray> rays) {
+        Color average = new Color(0,0,0);
+        int counter=0;
+        for (Ray ray:rays) {
+            average.add(traceRay(ray));
+            counter++;
+        }
+        return average.reduce(counter);
+    }
+
     /**
      * @param ray
      * @return the closest GeoPoint that intersects the ray

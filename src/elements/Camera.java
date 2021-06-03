@@ -4,21 +4,27 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 import static primitives.Util.isZero;
 
 /***
  * Class Camera represents a Camera in 3D space
  * by its Point3D location and 3 direction vectors(up, right and forward).
  * It also contains data about the view plane: it's height and width and the distance from the camera.
+ *                         and the focal plane:
  */
 public class Camera {
     private Point3D _p0;
-    private Vector _vUp; //enable rotation
+    private Vector _vUp; //private -> enable rotation
     private Vector _vTo;
     private Vector _vRight;
-    private double _distance;
-    private double _width;
-    private double _height;
+    private double _distance; //from V-Plane
+    private double _width; //of V-Plane
+    private double _height; //of V-Plane
+    private double _fDistance; //from focal plane
+    private double _apertureWidth;
+    private double _apertureHeight;
 
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
         _p0 = p0;
@@ -58,16 +64,40 @@ public class Camera {
         return _height;
     }
 
+    public double getFDistance() {
+        return _fDistance;
+    }
 
-    //expands the c-tor
+    public double getApertureWidth() {
+        return _apertureWidth;
+    }
+
+    public double getApertureHeight() {
+        return _apertureHeight;
+    }
+
+    //expands the c-tor for V-Plane
     public Camera setViewPlaneSize(double width, double height) {
         _width = width;
         _height = height;
+        //default reset of focal-plane
+        _apertureWidth = width;
+        _apertureHeight = height;
         return this;
     }
 
     public Camera setDistance(double distance) {
         _distance = distance;
+        //default reset of focal-plane
+        _fDistance = distance;
+        return this;
+    }
+
+    //expands the c-tor for F-Plane
+    public Camera setFocalPlane(double distance, double width, double height) {
+        _fDistance = distance;
+        _apertureWidth = width;
+        _apertureHeight = height;
         return this;
     }
 
@@ -98,10 +128,41 @@ public class Camera {
 
         Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
 
-        return new Ray(_p0, Vij );
+        return new Ray(_p0, Vij);
     }
 
-    //chaining methods
+    /**
+     * @param nX
+     * @param nY
+     * @param j
+     * @param i
+     * @return rays list of the beam through the asked pixel
+     */
+    public List<Ray> constructRaysBeamThroughPixel(int nX, int nY, int j, int i) {
+//        Point3D pc = _p0.add(_vTo.scale(_distance)); //view plane center
+//
+//        if (isZero(nX) || isZero(nY))
+//            throw new IllegalArgumentException("Pixels' number cannot be zero");
+//        double Ry = _height / nY; //height of one pixel
+//        double Rx = _width / nX; //width of one pixel
+//
+//        //pixel's distance from pc:
+//        double Xj = (j - (nX - 1) / 2d) * Rx;
+//        double Yi = -(i - (nY - 1) / 2d) * Ry;
+//
+//        Point3D Pij = pc;
+//        if (!isZero(Xj))
+//            Pij = Pij.add(_vRight.scale(Xj));
+//        if (!isZero(Yi))
+//            Pij = Pij.add(_vUp.scale(Yi));
+//
+//        Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
+//
+//        return new Ray(_p0, Vij);
+    }
+
+
+    //chaining methods:
 
     /**
      * rotation method to the sides
@@ -121,19 +182,19 @@ public class Camera {
 
         if (angle % 90 == 0) { //rotation on the axes of the direction vectors
             for (int i = 0; i < (int) angle / 90; i++) {
-                _vRight=turn90(_vRight);
+                _vRight = turn90(_vRight);
             }
             return this;
         }
-        
+
         int count = (int) angle / 90;
         angle %= 90;
 
         for (int i = 0; i < count; i++) {
-            _vRight=turn90(_vRight);
+            _vRight = turn90(_vRight);
         }
         turn(angle, _vRight);
-        _vRight=_vTo.crossProduct(_vUp).normalize();
+        _vRight = _vTo.crossProduct(_vUp).normalize();
 
         return this;
     }
@@ -149,11 +210,11 @@ public class Camera {
     //helper func to turn 90 degrees to the right
     private Vector turn90(Vector v) {
         _vTo = v;
-        if(v==_vRight)
+        if (v == _vRight)
             return _vTo.crossProduct(_vUp).normalize();
-         if(v==_vUp)
+        if (v == _vUp)
             return _vRight.crossProduct(_vTo).normalize();
-         throw new IllegalArgumentException("get just vRight or vUp");
+        throw new IllegalArgumentException("get just vRight or vUp");
     }
 
     /**
@@ -174,7 +235,7 @@ public class Camera {
 
         if (angle % 90 == 0) { //rotation on the axes of the direction vectors
             for (int i = 0; i < (int) angle / 90; i++) {
-                _vUp=turn90(_vUp);
+                _vUp = turn90(_vUp);
             }
             return this;
         }
@@ -183,10 +244,10 @@ public class Camera {
         angle %= 90;
 
         for (int i = 0; i < count; i++) {
-            _vUp=turn90(_vUp);
+            _vUp = turn90(_vUp);
         }
         turn(angle, _vUp);
-        _vUp=_vTo.crossProduct(_vRight).normalize(); ////check the direction!!!!!!
+        _vUp = _vTo.crossProduct(_vRight).normalize(); ////check the direction!!!!!!
 
         return this;
     }
@@ -197,13 +258,12 @@ public class Camera {
      * @param dis :the distance to the desired zoom (positive- getting closer, else- zoom out)
      */
     public Camera zoom(double dis) {
-        if(dis>0)
-        _p0=_p0.add(_vTo.scale(dis));
-        else
-            if(dis<0){ //reverse vector
-            Ray r=new Ray(_p0, _vTo);
-            Vector v=_p0.subtract(r.getTargetPoint(1));
-            _p0=_p0.add(v.scale(Math.abs(dis)));
+        if (dis > 0)
+            _p0 = _p0.add(_vTo.scale(dis));
+        else if (dis < 0) { //reverse vector
+            Ray r = new Ray(_p0, _vTo);
+            Vector v = _p0.subtract(r.getTargetPoint(1));
+            _p0 = _p0.add(v.scale(Math.abs(dis)));
         }
         return this;
     }

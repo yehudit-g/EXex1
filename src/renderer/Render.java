@@ -38,14 +38,16 @@ public class Render {
             throw new MissingResourceException("", "Render", "_imageWriter");
       if (_rayTracer == null)
             throw new MissingResourceException("", "Render", "_rayTracer");
-        //throw new ExecutionControl.NotImplementedException("");
         Ray ray;
+        //object beam; (ray/s)
         int nX=_imageWriter.getNx();
         int nY=_imageWriter.getNy();
         for (int i = 0; i <  nY; i++) {
             for (int j = 0; j <  nX; j++) {
                 ray = _camera.constructRayThroughPixel(nX, nY,j,i);
                 _imageWriter.writePixel(j,i,_rayTracer.traceRay(ray));
+//                beam = _camera.constructRaysBeamThroughPixel(nX, nY,j,i);
+//                _imageWriter.writePixel(j,i,_rayTracer.traceRay(beam));
             }
         }
     }
