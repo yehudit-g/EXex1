@@ -4,6 +4,7 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -109,36 +110,7 @@ public class Camera {
      * @return a ray from the camera to the asked pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
-        Point3D pc = _p0.add(_vTo.scale(_distance)); //view plane center
-
-        if (isZero(nX) || isZero(nY))
-            throw new IllegalArgumentException("Pixels' number cannot be zero");
-        double Ry = _height / nY; //height of one pixel
-        double Rx = _width / nX; //width of one pixel
-
-        //pixel's distance from pc:
-        double Xj = (j - (nX - 1) / 2d) * Rx;
-        double Yi = -(i - (nY - 1) / 2d) * Ry;
-
-        Point3D Pij = pc;
-        if (!isZero(Xj))
-            Pij = Pij.add(_vRight.scale(Xj));
-        if (!isZero(Yi))
-            Pij = Pij.add(_vUp.scale(Yi));
-
-        Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
-
-        return new Ray(_p0, Vij);
-    }
-
-    /**
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
-     * @return rays list of the beam through the asked pixel
-     */
-    public List<Ray> constructRaysBeamThroughPixel(int nX, int nY, int j, int i) {
+        return constructRayThroughPixel(nX, nY, j, i, 1).get(0);
 //        Point3D pc = _p0.add(_vTo.scale(_distance)); //view plane center
 //
 //        if (isZero(nX) || isZero(nY))
@@ -159,6 +131,62 @@ public class Camera {
 //        Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
 //
 //        return new Ray(_p0, Vij);
+    }
+
+    /**
+     * @param nX
+     * @param nY
+     * @param j
+     * @param i
+     * @param numOfRays
+     * @return rays list of the beam through the asked pixel
+     */
+    public List<Ray> constructRayThroughPixel(int nX, int nY, int j, int i, int numOfRays) {
+
+        Point3D pc = _p0.add(_vTo.scale(_distance)); //view plane center
+
+        if (isZero(nX) || isZero(nY))
+            throw new IllegalArgumentException("Pixels' number cannot be zero");
+        double Ry = _height / nY; //height of one pixel
+        double Rx = _width / nX; //width of one pixel
+
+        //pixel's distance from pc:
+        double Xj = (j - (nX - 1) / 2d) * Rx;
+        double Yi = -(i - (nY - 1) / 2d) * Ry;
+
+        Point3D Pij = pc;
+        if (!isZero(Xj))
+            Pij = Pij.add(_vRight.scale(Xj));
+        if (!isZero(Yi))
+            Pij = Pij.add(_vUp.scale(Yi));
+
+        List<Ray> rays = new LinkedList<>();
+
+        if (numOfRays == 1) {
+            Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
+            rays.add(new Ray(_p0, Vij));
+            return rays;
+        }
+
+        //else- beam of rays:
+        int k = (int) Math.sqrt(numOfRays);
+        double localH = _apertureHeight / (k-1); //height of
+        double localW = _apertureWidth / (k-1);
+        if (isZero(_apertureHeight) || isZero(_apertureWidth))
+            throw new IllegalArgumentException("aperture size cannot be zero");
+        Point3D lowerLeftCorner = pc.add(_vUp.scale(_apertureHeight / -2)).add(_vRight.scale(_apertureWidth / -2));
+        Point3D focalPoint = Pij.add(_vTo.scale(_fDistance));
+        Point3D rayHead;
+
+        for (i = 0; i < k; i++) {
+            for (j = 0; j < k; j++) {
+                rayHead = lowerLeftCorner;
+                rayHead.add(_vUp.scale(i * localH)).add(_vRight.scale(j * localW));
+                Vector vFP = focalPoint.subtract(rayHead);
+                rays.add(new Ray(rayHead, vFP));
+            }
+        }
+        return rays;
     }
 
 

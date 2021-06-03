@@ -5,6 +5,7 @@ import jdk.jshell.spi.ExecutionControl;
 import primitives.Color;
 import primitives.Ray;
 
+import java.util.List;
 import java.util.MissingResourceException;
 
 public class Render {
@@ -28,53 +29,82 @@ public class Render {
     }
 
     /**
-     *
      * @throws ExecutionControl.NotImplementedException
      */
-    public void renderImage() { //throws ExecutionControl.NotImplementedException {
+    public void renderImage() {
+        renderImage(1);
+//        if (_camera == null)
+//            throw new MissingResourceException("", "Render", "_camera");
+//        if (_imageWriter == null)
+//            throw new MissingResourceException("", "Render", "_imageWriter");
+//        if (_rayTracer == null)
+//            throw new MissingResourceException("", "Render", "_rayTracer");
+//        Ray ray;
+//        //object beam; (ray/s)
+//        int nX = _imageWriter.getNx();
+//        int nY = _imageWriter.getNy();
+//        for (int i = 0; i < nY; i++) {
+//            for (int j = 0; j < nX; j++) {
+//                ray = _camera.constructRayThroughPixel(nX, nY, j, i);
+//                _imageWriter.writePixel(j, i, _rayTracer.traceRay(ray));
+////                beam = _camera.constructRaysBeamThroughPixel(nX, nY,j,i);
+////                _imageWriter.writePixel(j,i,_rayTracer.traceRay(beam));
+//            }
+//        }
+    }
+
+    public void renderImage(int numOfRays) {
         if (_camera == null)
             throw new MissingResourceException("", "Render", "_camera");
         if (_imageWriter == null)
             throw new MissingResourceException("", "Render", "_imageWriter");
-      if (_rayTracer == null)
+        if (_rayTracer == null)
             throw new MissingResourceException("", "Render", "_rayTracer");
-        Ray ray;
-        //object beam; (ray/s)
-        int nX=_imageWriter.getNx();
-        int nY=_imageWriter.getNy();
-        for (int i = 0; i <  nY; i++) {
-            for (int j = 0; j <  nX; j++) {
-                ray = _camera.constructRayThroughPixel(nX, nY,j,i);
-                _imageWriter.writePixel(j,i,_rayTracer.traceRay(ray));
-//                beam = _camera.constructRaysBeamThroughPixel(nX, nY,j,i);
-//                _imageWriter.writePixel(j,i,_rayTracer.traceRay(beam));
+
+        Ray ray; //before picture improvement
+        List<Ray> beam; //after picture improvement
+
+        int nX = _imageWriter.getNx();
+        int nY = _imageWriter.getNy();
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
+                if (numOfRays > 1) { //after picture improvement
+                    beam = _camera.constructRayThroughPixel(nX, nY, j, i, numOfRays);
+                    _imageWriter.writePixel(j, i, _rayTracer.traceRay(beam));
+                }
+                else { //before picture improvement
+                    ray = _camera.constructRayThroughPixel(nX, nY, j, i);
+                    _imageWriter.writePixel(j, i, _rayTracer.traceRay(ray));
+                }
+
             }
         }
     }
 
     /**
-     *create the grid in the desired color
+     * create the grid in the desired color
+     *
      * @param interval - pixel length and width
      * @param color
      */
-    public void printGrid(int interval, Color color){
+    public void printGrid(int interval, Color color) {
         if (_imageWriter == null)
             throw new MissingResourceException("", "Render", "_imageWriter");
-        int nX=_imageWriter.getNx();
-        int nY=_imageWriter.getNy();
-        for (int i = 0; i <  nY; i++) {
-            for (int j = 0; j <  nX; j++) {
-                    if(i%interval==0 || j%interval==0)
-                        _imageWriter.writePixel(j, i, color);
-                }
+        int nX = _imageWriter.getNx();
+        int nY = _imageWriter.getNy();
+        for (int i = 0; i < nY; i++) {
+            for (int j = 0; j < nX; j++) {
+                if (i % interval == 0 || j % interval == 0)
+                    _imageWriter.writePixel(j, i, color);
             }
+        }
         //_imageWriter.writeToImage();
     }
 
     /**
      *
      */
-    public void writeToImage(){
+    public void writeToImage() {
         if (_imageWriter == null)
             throw new MissingResourceException("", "Render", "_imageWriter");
         _imageWriter.writeToImage();
