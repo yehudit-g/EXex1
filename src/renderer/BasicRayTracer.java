@@ -23,6 +23,7 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * c-tor
+     *
      * @param scene
      */
     public BasicRayTracer(Scene scene) {
@@ -41,9 +42,12 @@ public class BasicRayTracer extends RayTracerBase {
     @Override
     public Color traceRay(List<Ray> rays) {
         Color average = new Color(0,0,0);
-        int counter=0;
-        for (Ray ray:rays) {
-            average.add(traceRay(ray));
+        int counter = 0;
+        for (Ray ray : rays) {
+            if (counter == 0)
+                average = traceRay(ray);
+            else
+                average.add(traceRay(ray));
             counter++;
         }
 //java.awt.Color t=new java.awt.Color(0,0,0);
@@ -64,6 +68,7 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * Wrapping function for color-calculation
+     *
      * @param geopoint
      * @param ray
      * @return the color of geopoint, including environmental effects
@@ -121,10 +126,11 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * calls the recursive function of global effects calculation
+     *
      * @param gp
-     * @param v -the ray direction
+     * @param v     -the ray direction
      * @param level -the recurse level
-     * @param k -the attenuation coefficient
+     * @param k     -the attenuation coefficient
      * @return the color of reflection and refraction effects
      */
     private Color calcGlobalEffects(GeoPoint gp, Vector v, int level, double k) {
@@ -133,7 +139,7 @@ public class BasicRayTracer extends RayTracerBase {
         Material material = gp.geometry.getMaterial();
         double kkr = k * material.Kr;
         if (kkr > MIN_CALC_COLOR_K)
-            color =  calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.Kr, kkr);
+            color = calcGlobalEffect(constructReflectedRay(gp.point, v, n), level, material.Kr, kkr);
         double kkt = k * material.Kt;
         if (kkt > MIN_CALC_COLOR_K)
             color = color.add(
@@ -156,8 +162,8 @@ public class BasicRayTracer extends RayTracerBase {
 
     /**
      * @param point
-     * @param v -the original ray direction
-     * @param n -the geometry(which intersects the ray), for the DELTA moving
+     * @param v     -the original ray direction
+     * @param n     -the geometry(which intersects the ray), for the DELTA moving
      * @return a refracted ray
      */
     private Ray constructRefractedRay(Point3D point, Vector v, Vector n) {
@@ -165,10 +171,9 @@ public class BasicRayTracer extends RayTracerBase {
     }
 
     /**
-     *
      * @param point
-     * @param v -the original ray direction
-     * @param n -the geometry(which intersects the ray), for the DELTA moving
+     * @param v     -the original ray direction
+     * @param n     -the geometry(which intersects the ray), for the DELTA moving
      * @return a reflected ray
      */
     private Ray constructReflectedRay(Point3D point, Vector v, Vector n) {
