@@ -46,6 +46,10 @@ public class BasicRayTracer extends RayTracerBase {
             average.add(traceRay(ray));
             counter++;
         }
+//java.awt.Color t=new java.awt.Color(0,0,0);
+//        Color temp=average.reduce(counter);
+//        if(temp.equals(t))
+//            average=average;
         return average.reduce(counter);
     }
 
