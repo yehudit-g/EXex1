@@ -74,9 +74,9 @@ public class FirstImprovementTest {
 //                .setKl(0.0001).setKq(0.000001));
 
         ImageWriter imageWriter = new ImageWriter("FirstImprovement", 600, 600);
-        Render render = new Render() //
-                .setImageWriter(imageWriter) //
-                .setCamera(camera) //
+        Render render = new Render()
+                .setImageWriter(imageWriter)
+                .setCamera(camera)
                 .setRayTracer(new BasicRayTracer(scene));
         render.renderImage();
         render.writeToImage();
