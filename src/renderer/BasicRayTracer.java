@@ -44,10 +44,10 @@ public class BasicRayTracer extends RayTracerBase {
         Color average = new Color(0,0,0);
         int counter = 0;
         for (Ray ray : rays) {
-            if (counter == 0)
-                average = traceRay(ray);
-            else
-                average.add(traceRay(ray));
+//            if (counter == 0)
+//                average = traceRay(ray);
+//            else
+                average=average.add(traceRay(ray));
             counter++;
         }
 //java.awt.Color t=new java.awt.Color(0,0,0);

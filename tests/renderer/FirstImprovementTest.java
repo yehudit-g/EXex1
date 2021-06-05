@@ -85,9 +85,9 @@ public class FirstImprovementTest {
     }
 
     @Test
-    public void improvment1() {
+    public void improvement1() {
         Camera camera = new Camera(new Point3D(0, 0, -500), new Vector(0, 0, 1), new Vector(1, 0, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(450).setFocalPlane(500, 0.05, 0.05);
+                .setViewPlaneSize(30, 30).setDistance(450).setFocalPlane(500, 0.1, 0.1);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
