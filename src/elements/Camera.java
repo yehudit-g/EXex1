@@ -169,9 +169,11 @@ public class Camera {
         }
 
         //else- beam of rays:
+        if (numOfRays<1)
+            throw new IllegalArgumentException("Rays' number cannot be less than one");
         int k = (int) Math.sqrt(numOfRays);
-        double localH = _apertureHeight / (k-1); //height of
-        double localW = _apertureWidth / (k-1);
+        double localH = _apertureHeight / (k-1); //height of area unit on the aperture's face
+        double localW = _apertureWidth / (k-1);//width of area unit on the aperture's face
         if (isZero(_apertureHeight) || isZero(_apertureWidth))
             throw new IllegalArgumentException("aperture size cannot be zero");
         Point3D lowerLeftCorner = pc.add(_vUp.scale(_apertureHeight / -2)).add(_vRight.scale(_apertureWidth / -2));
@@ -180,8 +182,11 @@ public class Camera {
 
         for (i = 0; i < k; i++) {
             for (j = 0; j < k; j++) {
-                rayHead = lowerLeftCorner;
-                rayHead.add(_vUp.scale(i * localH)).add(_vRight.scale(j * localW));
+                rayHead= lowerLeftCorner;
+                if(i!=0)
+                    rayHead= rayHead.add(_vUp.scale(i * localH));
+                if(j!=0)
+                    rayHead= rayHead.add(_vRight.scale(j * localW));
                 Vector vFP = focalPoint.subtract(rayHead);
                 rays.add(new Ray(rayHead, vFP));
             }
