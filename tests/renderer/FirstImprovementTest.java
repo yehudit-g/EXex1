@@ -37,7 +37,7 @@ public class FirstImprovementTest {
     @Test
     public void FirstImprovement() {
         Camera camera = new Camera(new Point3D(-500, 40, 10), new Vector(1, 0, 0), new Vector(0, 0, 1)) //
-                .setViewPlaneSize(200, 200).setDistance(1000);
+                .setViewPlaneSize(200, 200).setDistance(1000).setFocalPlane(20, 2, 2);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
@@ -102,41 +102,24 @@ public class FirstImprovementTest {
     @Test
     public void improvement1() {
         Camera camera = new Camera(new Point3D(0, 0, -500), new Vector(0, 0, 1), new Vector(1, 0, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(450).setFocalPlane(500, 0.1, 0.1);
+                .setViewPlaneSize(30, 30).setDistance(450).setFocalPlane(50, 1, 1);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
-//        Geometries pyramid = new Geometries(
-//                new Polygon(new Point3D(100, 0, -10), new Point3D(80, 0, -10), new Point3D(80, 20, -10), new Point3D(100, 20, -10))
-//                        .setEmission(new Color(java.awt.Color.BLUE)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
-//                new Triangle(new Point3D(100, 0, -10), new Point3D(100, 20, -10), new Point3D(90, 10, 30))
-//                        .setEmission(new Color(java.awt.Color.PINK)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
-//                new Triangle(new Point3D(100, 0, -10), new Point3D(80, 0, -10), new Point3D(90, 10, 30))
-//                        .setEmission(new Color(java.awt.Color.BLUE)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
-//                new Triangle(new Point3D(100, 20, -10), new Point3D(80, 20, -10), new Point3D(90, 10, 30))
-//                        .setEmission(new Color(java.awt.Color.PINK)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
-//                new Triangle(new Point3D(80, 20, -10), new Point3D(80, 0, -10), new Point3D(90, 10, 30))
-//                        .setEmission(new Color(java.awt.Color.BLUE)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)));
-
         scene.geometries.add(
-                new Sphere(4, new Point3D(-10, -10, 0)) //big
+                new Sphere(4, new Point3D(-7, -6, 0))
                         .setEmission(new Color(java.awt.Color.red))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0)),
-                new Sphere(4, new Point3D(-5, -5, 50)) //big
+                new Sphere(4, new Point3D(-5, -5, 50))
                         .setEmission(new Color(java.awt.Color.gray))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0)),
-                new Sphere(4, new Point3D(15, 15, 100)) //big
+                new Sphere(7, new Point3D(15, 15, 100))
                         .setEmission(new Color(java.awt.Color.green))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0)),
-                new Sphere(3.5, new Point3D(5, 5, -50)) //big
+                new Sphere(4, new Point3D(5, 5, 75))
                         .setEmission(new Color(java.awt.Color.blue))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0)),
-                new Sphere(3, new Point3D(0, 0, -100)) //big
+                new Sphere(3, new Point3D(0, 0, 150))
                         .setEmission(new Color(java.awt.Color.pink))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0))
 
