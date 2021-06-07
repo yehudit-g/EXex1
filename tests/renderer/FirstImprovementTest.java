@@ -1,10 +1,7 @@
 package renderer;
 
 import elements.*;
-import geometries.Plane;
-import geometries.Polygon;
-import geometries.Sphere;
-import geometries.Triangle;
+import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
 import primitives.Material;
@@ -103,15 +100,32 @@ public class FirstImprovementTest {
     @Test
     public void improvement1() {
         Camera camera = new Camera(new Point3D(0, 0, -500), new Vector(0, 0, 1), new Vector(1, 0, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(450).setFocalPlane(50, 1, 1);
+                .setViewPlaneSize(30, 30).setDistance(450).setFocalPlane(70, 0.08, 0.08);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
-        scene.geometries.add(
+                Geometries pyramid = new Geometries(
+                new Polygon(new Point3D(0, -5, 100), new Point3D(5, -5, 100), new Point3D(5, 5, 100), new Point3D(0, 5, 100))
+                        .setEmission(new Color(java.awt.Color.BLUE)) //
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
+                new Triangle(new Point3D(0, -5, 100), new Point3D(0, 5, 100), new Point3D(10, 3, 50))
+                        .setEmission(new Color(java.awt.Color.PINK)) //
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
+                new Triangle(new Point3D(0, -5, 100), new Point3D(5, -5, 100), new Point3D(10, 3, 50))
+                        .setEmission(new Color(java.awt.Color.BLUE)) //
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
+                new Triangle(new Point3D(0, 5, 100), new Point3D(5, 5, 100), new Point3D(10, 3, 50))
+                        .setEmission(new Color(java.awt.Color.PINK)) //
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)),
+                new Triangle(new Point3D(5, 5, 100), new Point3D(5, -5, 100), new Point3D(10, 3, 50))
+                        .setEmission(new Color(java.awt.Color.BLUE)) //
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)));
+
+        scene.geometries.add(pyramid,
                 new Sphere(4, new Point3D(-7, -6, 0))
                         .setEmission(new Color(java.awt.Color.red))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0)),
-                new Sphere(4, new Point3D(-5, -5, 50))
+                new Sphere(4, new Point3D(-5, -5, 100))
                         .setEmission(new Color(java.awt.Color.gray))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0)),
                 new Sphere(7, new Point3D(15, 15, 100))
@@ -163,7 +177,7 @@ public class FirstImprovementTest {
                         .setKl(4E-4).setKq(2E-5));
 
         Render render = new Render() //
-                .setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600)) //
+                .setImageWriter(new ImageWriter("improvementsSadowTrianglesSphere", 600, 600)) //
                 .setCamera(camera) //
                 .setRayTracer(new BasicRayTracer(scene));
         render.renderImage(81);
