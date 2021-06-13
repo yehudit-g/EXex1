@@ -106,11 +106,13 @@ public class Camera {
      * @param nX - number of pixels on the width
      * @param nY - number of pixels on the height
      * @param j  - the pixel's number on the width
+     * @param j  - the pixel's number on the width
      * @param i  - the pixel's number on the height
      * @return a ray from the camera to the asked pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         return constructRayThroughPixel(nX, nY, j, i, 1).get(0);
+    }
 //        Point3D pc = _p0.add(_vTo.scale(_distance)); //view plane center
 //
 //        if (isZero(nX) || isZero(nY))
@@ -131,14 +133,14 @@ public class Camera {
 //        Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
 //
 //        return new Ray(_p0, Vij);
-    }
+
 
     /**
-     * @param nX
-     * @param nY
-     * @param j
-     * @param i
-     * @param numOfRays
+     * @param nX - number of pixels on the width
+     * @param nY - number of pixels on the height
+     * @param j  - the pixel's number on the width
+     * @param i  - the pixel's number on the height
+     * @param numOfRays -number of rays throw pixel
      * @return rays list of the beam through the asked pixel
      */
     public List<Ray> constructRayThroughPixel(int nX, int nY, int j, int i, int numOfRays) {
@@ -162,7 +164,7 @@ public class Camera {
 
         List<Ray> rays = new LinkedList<>();
 
-        if (numOfRays == 1) {
+        if (numOfRays == 1) { //one ray throw pixel
             Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
             rays.add(new Ray(_p0, Vij));
             return rays;
@@ -194,12 +196,11 @@ public class Camera {
         return rays;
     }
 
-
+//Bonus:
     //chaining methods:
 
     /**
      * rotation method to the sides
-     *
      * @param angle :the degrees number to turn (positive- to the right, else to the left)
      */
     public Camera turnToSide(double angle) {
