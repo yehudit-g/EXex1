@@ -6,7 +6,9 @@ import primitives.Vector;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /***
@@ -113,27 +115,6 @@ public class Camera {
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         return constructRayThroughPixel(nX, nY, j, i, 1).get(0);
     }
-//        Point3D pc = _p0.add(_vTo.scale(_distance)); //view plane center
-//
-//        if (isZero(nX) || isZero(nY))
-//            throw new IllegalArgumentException("Pixels' number cannot be zero");
-//        double Ry = _height / nY; //height of one pixel
-//        double Rx = _width / nX; //width of one pixel
-//
-//        //pixel's distance from pc:
-//        double Xj = (j - (nX - 1) / 2d) * Rx;
-//        double Yi = -(i - (nY - 1) / 2d) * Ry;
-//
-//        Point3D Pij = pc;
-//        if (!isZero(Xj))
-//            Pij = Pij.add(_vRight.scale(Xj));
-//        if (!isZero(Yi))
-//            Pij = Pij.add(_vUp.scale(Yi));
-//
-//        Vector Vij = Pij.subtract(_p0); //Vector from the camera to the pixel
-//
-//        return new Ray(_p0, Vij);
-
 
     /**
      * @param nX - number of pixels on the width
@@ -181,18 +162,41 @@ public class Camera {
         Point3D lowerLeftCorner = pc.add(_vUp.scale(_apertureHeight / -2)).add(_vRight.scale(_apertureWidth / -2));
         Point3D focalPoint = Pij.add(_vTo.scale(_fDistance));
         Point3D rayHead;
-
+        Random r=new Random();
+double rand;
         for (i = 0; i < k; i++) {
             for (j = 0; j < k; j++) {
                 rayHead= lowerLeftCorner;
-                if(i!=0)
+                if(i!=0){
                     rayHead= rayHead.add(_vUp.scale(i * localH));
-                if(j!=0)
-                    rayHead= rayHead.add(_vRight.scale(j * localW));
+                    rand=r.nextDouble();
+                    if(!isZero(rand)){
+                        rayHead= rayHead.add(_vUp.scale(rand * localH));
+                    }
+                }
+                if(j!=0) {
+                    rayHead = rayHead.add(_vRight.scale(j * localW));
+                    rand=r.nextDouble();
+                    if(!isZero(rand)){
+                        rayHead= rayHead.add(_vRight.scale(rand * localW));
+                    }
+                }
                 Vector vFP = focalPoint.subtract(rayHead);
                 rays.add(new Ray(rayHead, vFP));
             }
         }
+
+//        for (i = 0; i < k; i++) {
+//            for (j = 0; j < k; j++) {
+//                rayHead= lowerLeftCorner;
+//                if(i!=0)
+//                    rayHead= rayHead.add(_vUp.scale(i * localH));
+//                if(j!=0)
+//                    rayHead= rayHead.add(_vRight.scale(j * localW));
+//                Vector vFP = focalPoint.subtract(rayHead);
+//                rays.add(new Ray(rayHead, vFP));
+//            }
+//        }
         return rays;
     }
 

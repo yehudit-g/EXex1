@@ -102,11 +102,10 @@ public class MP1depthOfFieldTest {
         render.writeToImage();
     }
 
-
     @Test
     public void beforeImprovement() {
         Camera camera = new Camera(new Point3D(0, 0, -500), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(400);//.setFocalPlane(100, 1, 1);
+                .setViewPlaneSize(30, 30).setDistance(400);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
@@ -166,11 +165,10 @@ public class MP1depthOfFieldTest {
                         .setEmission(new Color(java.awt.Color.cyan))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.0)),
 
-
-                new Sphere(3.5, new Point3D(14, -3, 20))
+                new Sphere(3.5, new Point3D(13, -3, 20))
                         .setEmission(new Color(java.awt.Color.blue))
                         .setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(50).setKt(0.4)),
-                new Triangle(new Point3D(19, -2, 20), new Point3D(12, -3, 25), new Point3D(10, -6, 16))
+                new Triangle(new Point3D(18, -2, 20), new Point3D(11, -3, 25), new Point3D(9, -6, 16))
                         .setEmission(new Color(250, 30, 100)) //cut the ball
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0))
         );
@@ -178,8 +176,8 @@ public class MP1depthOfFieldTest {
         scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(-70, 100, 0), new Vector(12, -70, 0.5))
                 .setKl(0.0001).setKq(0.00001));
         scene.lights.add(new DirectionalLight(new Color(700, 400, 400), new Vector(0, 10, -5)));
-        //  scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(8, -9, -10), new Vector(0,-1,0)));
-        scene.lights.add(new SpotLight(new Color(java.awt.Color.white), new Point3D(5, 0, 0), new Vector(0, -1, -0.25)));
+        scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(8, -9, -10), new Vector(0,-1,0)));
+        //scene.lights.add(new SpotLight(new Color(java.awt.Color.white), new Point3D(5, 0, 0), new Vector(0, -1, -0.25)));
 
         ImageWriter imageWriter = new ImageWriter("beforeImprovement", 600, 600);
         Render render = new Render()
