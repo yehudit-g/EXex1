@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
  * The interface is responsible about finding intersections with geometries
  */
 public interface Intersectable {
+    BoundingBox _box = new BoundingBox(); //for BVH improvement
 
     /**
      * The class represent a 3D point on a geometry.
@@ -37,6 +38,37 @@ public interface Intersectable {
         }
     }
 
+    /**
+     *The class represent a box which is parallel to the axis
+     * and contain an Intersectable in the scene.
+     * The box described by the upper-far-right corner and the close-lower-left corner
+     * that get infinity values as default, and will be updated to the Geometry's borders.
+     */
+    class BoundingBox{
+        protected Point3D rightUp=new Point3D(Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY,Double.POSITIVE_INFINITY);
+        protected Point3D lowerLeft=new Point3D(Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY,Double.NEGATIVE_INFINITY);
+
+        public void setLowerLeft(Point3D lowerLeft) {
+            this.lowerLeft = lowerLeft;
+        }
+
+        public void setRightUp(Point3D rightUp) {
+            this.rightUp = rightUp;
+        }
+
+        public Point3D getRightUp() {
+            return rightUp;
+        }
+
+        public Point3D getLowerLeft() {
+            return lowerLeft;
+        }
+    }
+
+    /**
+     * Update the box corners according to the Geometry's borders
+     */
+    void setBox();
 
     /**
      *find the geometry's intersections with the given ray, at the given disance only

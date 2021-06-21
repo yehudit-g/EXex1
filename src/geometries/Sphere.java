@@ -22,6 +22,16 @@ public class Sphere extends RadialGeometry {
         _center = center;
     }
 
+    @Override
+    public void setBox() {
+        //close-lower-left corner
+        Point3D ll=new Point3D(_center.getX()-_radius,_center.getY()-_radius,_center.getZ()+_radius);
+        //far-right-up corner
+        Point3D ru=new Point3D(_center.getX()+_radius,_center.getY()+_radius,_center.getZ()-_radius);
+        _box.setLowerLeft(ll);
+        _box.setRightUp(ru);
+    }
+
     public Point3D getCenter() {
         return _center;
     }
@@ -38,6 +48,7 @@ public class Sphere extends RadialGeometry {
                 ", radius=" + getRadius() +
                 '}';
     }
+
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {

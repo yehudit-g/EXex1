@@ -80,6 +80,31 @@ public class Polygon extends Geometry {
         }
     }
 
+    @Override
+    public void setBox() {
+        double max_x=0.0, max_y=0.0, max_z=0.0;
+        double min_x=Double.POSITIVE_INFINITY, min_y=Double.POSITIVE_INFINITY, min_z=Double.POSITIVE_INFINITY;
+        double px,py,pz;
+        for (Point3D p:vertices) {
+            px=p.getX(); py=p.getY(); pz=p.getZ();
+            if(px>max_x)
+                max_x=p.getX();
+            if(py>max_y)
+                max_y=p.getY();
+            if(pz>max_z)
+                max_z=p.getZ();
+            if(px<min_x)
+                min_x=px;
+            if(py<min_y)
+                min_y=py;
+            if(pz<min_z)
+                min_z=pz;
+        }
+
+        _box.setLowerLeft(new Point3D(min_x,min_y,max_z));
+        _box.setRightUp(new Point3D(max_x,max_y,min_z));
+    }
+
     /**
      * Checking if a ray intersection with polygon's plane is inside it's borders
      * @param ray
