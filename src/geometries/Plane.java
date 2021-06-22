@@ -55,6 +55,7 @@ public class Plane extends Geometry {
                 '}';
     }
 
+
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         Point3D P0 = ray.getP0();

@@ -41,7 +41,7 @@ public interface Intersectable {
     /**
      *The class represent a box which is parallel to the axis
      * and contain an Intersectable in the scene.
-     * The box described by the upper-far-right corner and the close-lower-left corner
+     * The box described by the upper-close-right corner and the far-lower-left corner
      * that get infinity values as default, and will be updated to the Geometry's borders.
      */
     class BoundingBox{
@@ -69,6 +69,37 @@ public interface Intersectable {
      * Update the box corners according to the Geometry's borders
      */
     void setBox();
+
+    public boolean IsIntersectionInBox(Ray ray){
+        Point3D rayP0=ray.getP0();
+        Point3D rayDirection=ray.getDir().getHead();
+
+        double p0_x=rayP0.getX(), p0_y=rayP0.getY(), p0_z=rayP0.getZ();
+        double dir_x=rayDirection.getX(), dir_y=rayDirection.getY(), dir_z=rayDirection.getZ();
+
+        List<Point3D> intersections=this.findIntersections(ray);
+        if(intersections.size()!=2){
+            return  false;
+        }
+
+        //t1x=distance(p0, intersections[0])
+        //...
+        //t2x=distance(p0, intersections[1])
+        //...
+        //t_near=max (t1_x, t1y, t1z)
+        //t_far=min(t2x,t2y, t2z)
+        //if(t_near!=t_far) return false
+        //return true
+
+//
+//        if(rayDirection.getX()<0){
+//            double maxX=(_box.lowerLeft.getX()-rayP0.getX())/rayDirection.getX();
+//            if(maxX<=0){
+//                return false;
+//            }
+//            double minX=(_box.rightUp.getX()-rayP0.getX())/rayDirection.getX();
+//        }
+    }
 
     /**
      *find the geometry's intersections with the given ray, at the given disance only

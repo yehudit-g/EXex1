@@ -38,7 +38,6 @@ public class Geometries implements Intersectable {
 //    }
 
 
-
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> result=null;
