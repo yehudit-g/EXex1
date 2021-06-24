@@ -2,9 +2,13 @@ package scene;
 
 import elements.AmbientLight;
 import elements.LightSource;
+import geometries.BoundingBox;
 import geometries.Geometries;
+import geometries.Intersectable;
+import geometries.Plane;
 import primitives.Color;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,4 +61,5 @@ public class Scene {
         this.geometries = geometries;
         return this;
     }
+
 }

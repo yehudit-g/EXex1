@@ -12,6 +12,7 @@ public class Render {
     public ImageWriter _imageWriter;
     public Camera _camera;
     public BasicRayTracer _rayTracer;
+    public boolean usingBVH=false;
 
     public Render setImageWriter(ImageWriter imageWriter) {
         _imageWriter = imageWriter;
@@ -25,6 +26,11 @@ public class Render {
 
     public Render setRayTracer(BasicRayTracer rayTracer) {
         _rayTracer = rayTracer;
+        return this;
+    }
+
+    public Render setUsingBVH(boolean usingBVH) {
+        this.usingBVH = usingBVH;
         return this;
     }
 
@@ -60,6 +66,9 @@ public class Render {
             throw new MissingResourceException("", "Render", "_imageWriter");
         if (_rayTracer == null)
             throw new MissingResourceException("", "Render", "_rayTracer");
+        if(usingBVH){
+            //////////////////Dan
+        }
 
         Ray ray; //before picture improvement
         List<Ray> beam; //after picture improvement
@@ -83,7 +92,6 @@ public class Render {
 
     /**
      * create the grid in the desired color
-     *
      * @param interval - pixel length and width
      * @param color
      */

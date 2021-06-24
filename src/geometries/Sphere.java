@@ -24,12 +24,12 @@ public class Sphere extends RadialGeometry {
 
     @Override
     public void setBox() {
-        //close-lower-left corner
-        Point3D ll=new Point3D(_center.getX()-_radius,_center.getY()-_radius,_center.getZ()+_radius);
-        //far-right-up corner
-        Point3D ru=new Point3D(_center.getX()+_radius,_center.getY()+_radius,_center.getZ()-_radius);
-        _box.setLowerLeft(ll);
-        _box.setRightUp(ru);
+        _box.setMaxX(_center.getX()+_radius);
+        _box.setMaxY(_center.getY()+_radius);
+        _box.setMaxZ(_center.getZ()+_radius);
+        _box.setMinX(_center.getX()-_radius);
+        _box.setMinY(_center.getY()-_radius);
+        _box.setMinZ(_center.getZ()-_radius);
     }
 
     public Point3D getCenter() {

@@ -82,7 +82,7 @@ public class Polygon extends Geometry {
 
     @Override
     public void setBox() {
-        double max_x=0.0, max_y=0.0, max_z=0.0;
+        double max_x=Double.NEGATIVE_INFINITY, max_y=Double.NEGATIVE_INFINITY, max_z=Double.NEGATIVE_INFINITY;
         double min_x=Double.POSITIVE_INFINITY, min_y=Double.POSITIVE_INFINITY, min_z=Double.POSITIVE_INFINITY;
         double px,py,pz;
         for (Point3D p:vertices) {
@@ -101,8 +101,12 @@ public class Polygon extends Geometry {
                 min_z=pz;
         }
 
-        _box.setLowerLeft(new Point3D(min_x,min_y,max_z));
-        _box.setRightUp(new Point3D(max_x,max_y,min_z));
+        _box.setMaxX(max_x);
+        _box.setMaxY(max_y);
+        _box.setMaxZ(max_z);
+        _box.setMinX(min_x);
+        _box.setMinY(min_y);
+        _box.setMinZ(min_z);
     }
 
     /**
