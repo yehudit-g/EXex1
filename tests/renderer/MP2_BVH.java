@@ -125,23 +125,46 @@ public class MP2_BVH {
 
     @Test
     public void BVHpic() {
-        Camera camera = new Camera(new Point3D(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
+        Camera camera = new Camera(new Point3D(-200, 0, 1000), new Vector(200, 0, -1000), new Vector(0, 1, 0)) //
                 .setViewPlaneSize(30, 30).setDistance(350);//.setFocalPlane(100, 1, 1);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
         scene.background=Color.BLACK;
 
+//        Geometries cube = new Geometries(
+//                new Polygon(new Point3D(35,-10, 30), new Point3D(35, -40, -40),
+//                        new Point3D(-38, -12, -40),  new Point3D(-38, -8, 28))
+//                        .setEmission(new Color(java.awt.Color.blue)) //cube
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),new Polygon(new Point3D(9, -8, 0), new Point3D(12, -10, -10), new Point3D(9, -12, -20), new Point3D(6, -10, -10))
+//                        .setEmission(new Color(java.awt.Color.blue))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+//                new Polygon(new Point3D(9, -14, -20), new Point3D(9, -12, -20), new Point3D(12, -10, -10), new Point3D(12, -12, -10))
+//                        .setEmission(new Color(java.awt.Color.blue))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+//                new Polygon(new Point3D(9, -8, 0), new Point3D(9, -10, 0), new Point3D(12, -12, -10), new Point3D(12, -10, -10))
+//                        .setEmission(new Color(java.awt.Color.blue))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+//                new Polygon(new Point3D(9, -8, 0), new Point3D(9, -10, 0), new Point3D(6, -12, -10), new Point3D(6, -10, -10))
+//                        .setEmission(new Color(java.awt.Color.blue))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+//                new Polygon(new Point3D(9, -14, -20), new Point3D(9, -12, -20), new Point3D(6, -10, -10), new Point3D(6, -12, -10))
+//                        .setEmission(new Color(java.awt.Color.blue))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))
+//        );
+
 
 
         scene.geometries.add(
-                new Polygon(new Point3D(35,-10, 30), new Point3D(35, -40, 0),
-                        new Point3D(-40, -40, 0),  new Point3D(-30, -10, 30))
+                new Polygon(new Point3D(35,-10, -30), new Point3D(35, -40, 40),
+                        new Point3D(-40, -40, 40),  new Point3D(-40, -10, -30))
                         .setEmission(new Color(java.awt.Color.blue)) //floor
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
-                new Polygon(new Point3D(35,-9, 30), new Point3D(35, -11, 28),
-                        new Point3D(30, -11, 28),  new Point3D(30, -9, 30))
-                        .setEmission(new Color(java.awt.Color.GREEN)) //floor
-                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))
+//                new Polygon(new Point3D(35,-9, 30), new Point3D(35, -11, 28),
+//                        new Point3D(30, -11, 28),  new Point3D(30, -9, 30))
+//                        .setEmission(new Color(java.awt.Color.GREEN)) //floor
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))
+                new Sphere(1, new Point3D(0,-25,0))
+                .setEmission(new Color(java.awt.Color.GREEN))
 //                ,new Polygon(new Point3D(0,0, 1500), new Point3D(55, -35, -500),
 //                        new Point3D(-30, -50, -1500), new Point3D(-30, 0, 1500))
 //                        .setEmission(new Color(java.awt.Color.GREEN)) //floor
