@@ -99,7 +99,7 @@ public class Geometries implements Intersectable {
         //In every loop the closest pair will be attached
         int firstIndex = 0, secondIndex=0;
         double miniDistance, tmpDistance;
-        while (lst.size()>1) {
+        while (lst.size()>2) {
             miniDistance=Double.POSITIVE_INFINITY;
             for (int i = 0; i < lst.size(); i++) {
                 firstIndex=i;
@@ -122,5 +122,8 @@ public class Geometries implements Intersectable {
             lst.remove(secondIndex); //before the first - to protect the index value.
             lst.remove(firstIndex);
         }
+        //box of scene's borders
+        //include planes!
+        //lst.get(0).addAll(infinities);
     }
  }

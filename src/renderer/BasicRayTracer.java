@@ -5,6 +5,9 @@ import elements.LightSource;
 import static geometries.Intersectable.GeoPoint;
 import static primitives.Util.alignZero;
 
+import geometries.BoundingBox;
+import geometries.Geometry;
+import geometries.Intersectable;
 import primitives.*;
 import scene.Scene;
 
@@ -56,7 +59,28 @@ public class BasicRayTracer extends RayTracerBase {
      */
     private GeoPoint findClosestIntersectionPoint(Ray ray) {
         List<GeoPoint> geoList = _scene.geometries.findGeoIntersections(ray);
+        if(_scene.usingBVH)
+            return ray.findClosestGeoPoint(BVHrec(ray,geoList));
         return ray.findClosestGeoPoint(geoList);
+    }
+
+    /**
+     * scan the BVH tree in recursion to find intersections
+     * @param ray
+     * @return the GeoPoint's list that intersects the ray
+     */
+    private List<GeoPoint> BVHrec(Ray ray, List<GeoPoint> geoList){
+        Geometry element;
+        if(geoList==null)
+            return null;
+        else{
+            for (int i = 0; i < geoList.size(); i++) {
+                element = geoList.get(i).geometry;
+                if(element.IsIntersectionInBox(ray))
+                    geoList.addAll(((element).findGeoIntersections(ray)));
+            }
+        }
+
     }
 
     /**

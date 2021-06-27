@@ -7,6 +7,7 @@ import geometries.Geometries;
 import geometries.Intersectable;
 import geometries.Plane;
 import primitives.Color;
+import renderer.Render;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ public class Scene {
     public AmbientLight ambientLight =new AmbientLight();
     public Geometries geometries;
     public List<LightSource> lights =new LinkedList<>();
+    public boolean usingBVH=false;
 
     public Scene(String name) {
         _name = name;
@@ -62,4 +64,8 @@ public class Scene {
         return this;
     }
 
+    public Scene setUsingBVH(boolean usingBVH) {
+        this.usingBVH = usingBVH;
+        return this;
+    }
 }

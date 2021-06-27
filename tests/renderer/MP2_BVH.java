@@ -134,15 +134,26 @@ public class MP2_BVH {
 
 
         scene.geometries.add(
-                new Polygon(new Point3D(55,-100, 500), new Point3D(55, 0, -500),
-                        new Point3D(-55, 0, -500),  new Point3D(-55, -100, 500))
+                new Polygon(new Point3D(35,-10, 30), new Point3D(35, -40, 0),
+                        new Point3D(-40, -40, 0),  new Point3D(-30, -10, 30))
                         .setEmission(new Color(java.awt.Color.blue)) //floor
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
-                new Polygon(new Point3D(0,0, 1500), new Point3D(55, -35, -500),
-                        new Point3D(-30, -50, -1500), new Point3D(-30, 0, 1500))
+                new Polygon(new Point3D(35,-9, 30), new Point3D(35, -11, 28),
+                        new Point3D(30, -11, 28),  new Point3D(30, -9, 30))
                         .setEmission(new Color(java.awt.Color.GREEN)) //floor
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))
+//                ,new Polygon(new Point3D(0,0, 1500), new Point3D(55, -35, -500),
+//                        new Point3D(-30, -50, -1500), new Point3D(-30, 0, 1500))
+//                        .setEmission(new Color(java.awt.Color.GREEN)) //floor
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))
         );
+//        for(int i=35;i>-40;i-=5)
+//            for(int j=0;j<15;j++){
+//                scene.geometries.add(
+//                        new Polygon(new Point3D(i,-10, 30), new Point3D(i, -40, 0),
+//                                new Point3D(i-, -40, 0),  new Point3D(-40, -10, 30))
+//                                .setEmission(new Color(java.awt.Color.blue)));
+//            }
 
         scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(-70, 100, 0), new Vector(12, -70, 0.5))
                 .setKl(0.0001).setKq(0.00001));
