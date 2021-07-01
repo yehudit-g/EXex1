@@ -124,6 +124,7 @@ public class Geometries implements Intersectable {
         }
         //box of scene's borders
         //include planes!
+
         //lst.get(0).addAll(infinities);
     }
  }

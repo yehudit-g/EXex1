@@ -135,7 +135,8 @@ public class MP2_BVH {
 //                new Polygon(new Point3D(35,-10, 30), new Point3D(35, -40, -40),
 //                        new Point3D(-38, -12, -40),  new Point3D(-38, -8, 28))
 //                        .setEmission(new Color(java.awt.Color.blue)) //cube
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),new Polygon(new Point3D(9, -8, 0), new Point3D(12, -10, -10), new Point3D(9, -12, -20), new Point3D(6, -10, -10))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+//                new Polygon(new Point3D(9, -8, 0), new Point3D(12, -10, -10), new Point3D(9, -12, -20), new Point3D(6, -10, -10))
 //                        .setEmission(new Color(java.awt.Color.blue))
 //                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
 //                new Polygon(new Point3D(9, -14, -20), new Point3D(9, -12, -20), new Point3D(12, -10, -10), new Point3D(12, -12, -10))
@@ -158,6 +159,10 @@ public class MP2_BVH {
                 new Polygon(new Point3D(35,-10, -30), new Point3D(35, -40, 40),
                         new Point3D(-40, -40, 40),  new Point3D(-40, -10, -30))
                         .setEmission(new Color(java.awt.Color.blue)) //floor
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+                new Polygon(new Point3D(-28,-10, -30), new Point3D(-28, -15, -28),
+                        new Point3D(-38, -15, -28),  new Point3D(-38, -10, -30))
+                        .setEmission(new Color(java.awt.Color.GREEN)) //cube
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
 //                new Polygon(new Point3D(35,-9, 30), new Point3D(35, -11, 28),
 //                        new Point3D(30, -11, 28),  new Point3D(30, -9, 30))

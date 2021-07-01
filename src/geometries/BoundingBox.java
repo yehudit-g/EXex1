@@ -18,7 +18,7 @@ public class BoundingBox implements Intersectable{
     protected double minX = Double.NEGATIVE_INFINITY;
     protected double minY = Double.NEGATIVE_INFINITY;
     protected double minZ = Double.NEGATIVE_INFINITY;
-    public Geometries _geometries;
+//    public Geometries _geometries;
 
     //c-tors
     public BoundingBox(){};
