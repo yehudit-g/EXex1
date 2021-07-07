@@ -126,7 +126,7 @@ public class MP2_BVH {
     @Test
     public void BVHpic() {
         Camera camera = new Camera(new Point3D(-300, 0, 1000), new Vector(300, 0, -1000), new Vector(0, 1, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(350).setFocalPlane(200, 1, 1);
+                .setViewPlaneSize(30, 30).setDistance(350);//.setFocalPlane(200, 1, 1);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
         scene.background=Color.BLACK;
@@ -156,8 +156,8 @@ public class MP2_BVH {
 
 
         scene.geometries.add(
-                new Polygon(new Point3D(35,-20, -20), new Point3D(35, -40, 50),
-                        new Point3D(-40, -40, 50),  new Point3D(-40, -20, -20))
+                new Polygon(new Point3D(35,-15, -30), new Point3D(35, -40, 50),
+                        new Point3D(-40, -40, 50),  new Point3D(-40, -15, -30))
                         .setEmission(new Color(java.awt.Color.blue)) //floor
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
 
@@ -371,16 +371,40 @@ public class MP2_BVH {
                         .setEmission(new Color(java.awt.Color.green)) //cube7 front
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
 
+                new Polygon(new Point3D(30, -28, -30), new Point3D(30, -23, -28),
+                        new Point3D(21, -23, -28),  new Point3D(21, -28, -30))
+                        .setEmission(new Color(java.awt.Color.gray)) //cube_ floor
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+
+                new Polygon(new Point3D(30, -23, -30), new Point3D(30, -18, -28),
+                        new Point3D(21, -18, -28),  new Point3D(21, -23, -30))
+                        .setEmission(new Color(java.awt.Color.gray)) //cube_ up
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+
+                new Polygon(new Point3D(30, -28, -30), new Point3D(30, -23, -28),
+                        new Point3D(30, -18, -28),  new Point3D(30, -23, -30))
+                        .setEmission(new Color(java.awt.Color.gray)) //cube_ right
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+
+                new Polygon(new Point3D(30, -23, -30), new Point3D(21, -23, -28),
+                        new Point3D(21, -18, -28),  new Point3D(30, -18, -30))
+                        .setEmission(new Color(java.awt.Color.gray)) //cube_ back
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+
+                new Polygon(new Point3D(30, -28, -30), new Point3D(21, -28, -28),
+                        new Point3D(21, -23, -28),  new Point3D(30, -23, -30))
+                        .setEmission(new Color(java.awt.Color.gray)) //cube_ front
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
 
 
 //                new Polygon(new Point3D(35,-9, 30), new Point3D(35, -11, 28),
 //                        new Point3D(30, -11, 28),  new Point3D(30, -9, 30))
 //                        .setEmission(new Color(java.awt.Color.GREEN)) //floor
 //                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))
-                new Sphere(1, new Point3D(0,-25,0))
+                new Sphere(1, new Point3D(0,-23,0))
                 .setEmission(new Color(java.awt.Color.GREEN)),
 
-                new Sphere(5, new Point3D(-25,-21,0))
+                new Sphere(5, new Point3D(-25,-19,0))
                         .setEmission(new Color(java.awt.Color.cyan))
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
                 new Sphere(3, new Point3D(-10,-28,0))
@@ -410,7 +434,7 @@ public class MP2_BVH {
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
                 .setRayTracer(new BasicRayTracer(scene)); //.turnOnUsingBVH()
-        render.renderImage(81);
+        render.renderImage();
         render.writeToImage();
     }
 }
