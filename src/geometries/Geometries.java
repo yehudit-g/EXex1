@@ -12,7 +12,8 @@ import java.util.List;
  * Composite class for all intersectable objects
  */
 public class Geometries implements Intersectable {
-    private List<Intersectable> intersectable=null;
+    private List<Intersectable> intersectable = null;
+    public boolean isUsingBVH = false; //flag for BVH improvement
 
     //Linked list -explanation:
     //Linked list has constant addition time.
@@ -20,44 +21,42 @@ public class Geometries implements Intersectable {
     //In the alternative, array list, the adding will take O(n).
 
     public Geometries() {
-        intersectable=new LinkedList<>();
-        this.ResetBox();
+        intersectable = new LinkedList<>();
+    }
+
+    //using the BVH improvement. chaining method
+    public Geometries turnOnBVH() {
+        isUsingBVH = true;
+        return this;
     }
 
     /**
-     * reset the box with opposite values to get the Min/Max borders of the list
+     * set the box borders according to the Min/Max values of the geometries' list
      */
-    private void ResetBox() {
-        _box.setMaxX(Double.NEGATIVE_INFINITY);
-        _box.setMaxY(Double.NEGATIVE_INFINITY);
-        _box.setMaxZ(Double.NEGATIVE_INFINITY);
-        _box.setMinX(Double.POSITIVE_INFINITY);
-        _box.setMinY(Double.POSITIVE_INFINITY);
-        _box.setMinZ(Double.POSITIVE_INFINITY);
+    @Override
+    public void setBox() {
+        _box.ResetOppositeValuesBox();
+        BoundingBox b;
+        for (Intersectable element : intersectable) {
+            b = element.getBox();
+            _box.maxX = Math.max(_box.getMaxX(), b.getMaxX());
+            _box.maxY = Math.max(_box.getMaxY(), b.getMaxY());
+            _box.maxZ = Math.max(_box.getMaxZ(), b.getMaxZ());
+            _box.minX = Math.min(_box.getMinX(), b.getMinX());
+            _box.minY = Math.min(_box.getMinY(), b.getMinY());
+            _box.minZ = Math.min(_box.getMinZ(), b.getMinZ());
+        }
     }
 
     public Geometries(Intersectable... lst) {
         intersectable = new LinkedList<>();
         add(lst);
+        this.setBox();
     }
 
     public void add(Intersectable... lst) {
-        //intersectable.addAll(Arrays.asList(lst));
-        for (Intersectable geo:lst) {
-            intersectable.add(geo);
-            if(geo._box.minX<this._box.minX)
-                _box.setMinX(geo._box.minX);
-            if(geo._box.minY<this._box.minY)
-                _box.setMinY(geo._box.minY);
-            if(geo._box.minZ<this._box.minZ)
-                _box.setMinZ(geo._box.minZ);
-            if(geo._box.maxX>this._box.maxX)
-                _box.setMaxX(geo._box.maxX);
-            if(geo._box.maxY>this._box.maxY)
-                _box.setMaxY(geo._box.maxY);
-            if(geo._box.maxZ>this._box.maxZ)
-                _box.setMaxZ(geo._box.maxZ);
-        }
+        intersectable.addAll(Arrays.asList(lst));
+        this.setBox();
     }
 
 //    @Override
@@ -67,64 +66,60 @@ public class Geometries implements Intersectable {
 
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-        List<GeoPoint> result=null;
-        for(Intersectable element: intersectable){
-            List<GeoPoint>elemList= element.findGeoIntersections(ray, maxDistance);
-            if(elemList!=null){
-                if(result==null){
-                    result=new LinkedList<>();
+        List<GeoPoint> result = null;
+        if (!isUsingBVH || /*element.*/getBox().IsIntersectionInBox(ray)) {
+            for (Intersectable element : intersectable) {
+                List<GeoPoint> elemList = element.findGeoIntersections(ray, maxDistance);
+                if (elemList != null) {
+                    if (result == null) {
+                        result = new LinkedList<>();
+                    }
+                    result.addAll((elemList));
                 }
-                result.addAll((elemList));
             }
         }
         return result;
     }
 
     /**
-     *build the bounding boxes tree.
-     *if there is a plane it will be attached to the root.
+     * build the bounding boxes tree.
+     * if there is a plane it will be attached to the root.
      */
-    public void BuildTree(){
-        List<BoundingBox> lst= new ArrayList<>();
-        List<Intersectable> infinities= new ArrayList<>();
-        for(int i=0; i<intersectable.size(); i++){
-            if(intersectable.get(i).getClass()== Plane.class)
+    public void BuildTree() {
+        List<Intersectable> lst = new ArrayList<>();
+        List<Intersectable> infinities = new ArrayList<>();
+        for (int i = 0; i < intersectable.size(); i++) {
+            if (intersectable.get(i).getClass() == Plane.class)
                 infinities.add(intersectable.get(i));
             else
-                lst.add(intersectable.get(i).getBox());
+                lst.add(intersectable.get(i));
         }
-        intersectable.clear();
 
         //Attach pairs of close boxes, until all the geometries are in 1 big box
         //In every loop the closest pair will be attached
-        int firstIndex = 0, secondIndex=0;
+        int firstIndex = 0, secondIndex = 0;
         double miniDistance, tmpDistance;
-        while (lst.size()>2) {
-            miniDistance=Double.POSITIVE_INFINITY;
+        while (lst.size() > 1) {
+            miniDistance = Double.POSITIVE_INFINITY;
             for (int i = 0; i < lst.size(); i++) {
-                firstIndex=i;
-                for (int j = i+1; j < lst.size(); j++) {
-                    tmpDistance=lst.get(i).findDistance(lst.get(j));
-                    if (tmpDistance < miniDistance){
-                        secondIndex=j;
-                        miniDistance=tmpDistance;
+                for (int j = i + 1; j < lst.size(); j++) {
+                    tmpDistance = lst.get(i).getBox().findDistance(lst.get(j).getBox());
+                    if (tmpDistance < miniDistance) {
+                        firstIndex = i;
+                        secondIndex = j;
+                        miniDistance = tmpDistance;
                     }
                 }
             }
-            BoundingBox first=lst.get(firstIndex);
-            BoundingBox second=lst.get(secondIndex);
-            BoundingBox b=new BoundingBox(Math.max(first.getMaxX(),second.getMaxX()),Math.max(first.getMaxY(),second.getMaxY()),
-                    Math.max(first.getMaxZ(),second.getMaxZ()),Math.min(first.getMinX(),second.getMinX()),
-                    Math.min(first.getMinY(),second.getMinY()),Math.min(first.getMinZ(),second.getMinZ()));
-            b._geometries.add(first);
-            b._geometries.add(second);
-            lst.add(b);
+            Geometries tmp = new Geometries(lst.get(firstIndex), lst.get(secondIndex));
             lst.remove(secondIndex); //before the first - to protect the index value.
             lst.remove(firstIndex);
+            lst.add(tmp.turnOnBVH());
         }
-        //box of scene's borders
-        //include planes!
 
-        //lst.get(0).addAll(infinities);
+        intersectable.clear();
+        intersectable.add(lst.get(0));
+        for (int i = 0; i < infinities.size(); i++)
+            intersectable.add(infinities.get(i));
     }
- }
+}

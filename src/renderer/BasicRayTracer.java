@@ -59,33 +59,11 @@ public class BasicRayTracer extends RayTracerBase {
      */
     private GeoPoint findClosestIntersectionPoint(Ray ray) {
         List<GeoPoint> geoList = _scene.geometries.findGeoIntersections(ray);
-//        if(_scene.usingBVH)
-//            return ray.findClosestGeoPoint(BVHrec(ray,geoList));
         return ray.findClosestGeoPoint(geoList);
     }
 
-//    /**
-//     * scan the BVH tree in recursion to find intersections
-//     * @param ray
-//     * @return the GeoPoint's list that intersects the ray
-//     */
-//    private List<GeoPoint> BVHrec(Ray ray, List<GeoPoint> geoList){
-//        Geometry element;
-//        if(geoList==null)
-//            return null;
-//        else{
-//            for (int i = 0; i < geoList.size(); i++) {
-//                element = geoList.get(i).geometry;
-//                if(element.IsIntersectionInBox(ray))
-//                    geoList.addAll(((element).findGeoIntersections(ray)));
-//            }
-//        }
-//
-//    }
-
     /**
      * Wrapping function for color-calculation
-     *
      * @param geopoint
      * @param ray
      * @return the color of geopoint, including environmental effects
@@ -214,7 +192,7 @@ public class BasicRayTracer extends RayTracerBase {
     }
 
     /**
-     * @param kd of the material
+     * @param kd - of the material
      * @param l  - the light direction
      * @param n  - geometry's normal
      * @return the diffuse level
@@ -249,7 +227,7 @@ public class BasicRayTracer extends RayTracerBase {
     /**
      * @param ls -light source
      * @param l  -light direction
-     * @param n- geometry's normal
+     * @param n -geometry's normal
      * @param gp -point on the geometry
      * @return shading coefficient
      */

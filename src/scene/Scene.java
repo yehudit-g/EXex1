@@ -18,16 +18,15 @@ import java.util.List;
  * by it's name, background color, light sources and geometric bodies
  */
 public class Scene {
-    private  final String _name;
-    public Color background =Color.BLACK;
-    public AmbientLight ambientLight =new AmbientLight();
+    private final String _name;
+    public Color background = Color.BLACK;
+    public AmbientLight ambientLight = new AmbientLight();
     public Geometries geometries;
-    public List<LightSource> lights =new LinkedList<>();
-    public boolean usingBVH=false;
+    public List<LightSource> lights = new LinkedList<>();
 
     public Scene(String name) {
         _name = name;
-        geometries =new Geometries();
+        geometries = new Geometries();
     }
 
     public Scene setLights(List<LightSource> lights) {
@@ -37,6 +36,7 @@ public class Scene {
 
     /**
      * setter
+     *
      * @param background
      * @return the scene - chaining method
      */
@@ -44,8 +44,10 @@ public class Scene {
         this.background = background;
         return this;
     }
+
     /**
      * setter
+     *
      * @param ambientLight
      * @return the scene - chaining method
      */
@@ -56,6 +58,7 @@ public class Scene {
 
     /**
      * setter
+     *
      * @param geometries
      * @return the scene - chaining method
      */
@@ -64,8 +67,13 @@ public class Scene {
         return this;
     }
 
-    public Scene setUsingBVH(boolean usingBVH) {
-        this.usingBVH = usingBVH;
+    /**
+     * turning on the BVH improvement
+     * @return this. chaining method
+     */
+    public Scene turnOnUsingBVH() {
+        geometries.turnOnBVH();
+        geometries.BuildTree();
         return this;
     }
 }

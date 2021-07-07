@@ -39,7 +39,12 @@ public interface Intersectable {
         }
     }
 
+    /**
+     * getter for BVH improvement
+     * @return the geometry's box
+     */
     public default BoundingBox getBox() {
+        this.setBox();
         return _box;
     }
 

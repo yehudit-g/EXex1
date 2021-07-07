@@ -126,7 +126,7 @@ public class MP2_BVH {
     @Test
     public void BVHpic() {
         Camera camera = new Camera(new Point3D(-300, 0, 1000), new Vector(300, 0, -1000), new Vector(0, 1, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(350);//.setFocalPlane(100, 1, 1);
+                .setViewPlaneSize(30, 30).setDistance(350).setFocalPlane(200, 1, 1);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
         scene.background=Color.BLACK;
@@ -409,81 +409,8 @@ public class MP2_BVH {
         Render render = new Render()
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
-                .setRayTracer(new BasicRayTracer(scene));
-        render.renderImage();
+                .setRayTracer(new BasicRayTracer(scene)); //.turnOnUsingBVH()
+        render.renderImage(81);
         render.writeToImage();
     }
-
-
-//    @Test
-//    public void catTest() {
-//        Scene scene = new Scene("Test scene");
-//        scene.distance(1000.0D);
-//        scene.setBackground(new Color(java.awt.Color.BLACK));
-//        scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15D));
-//        scene.geometries.add(new Intersectable[]{new Triangle(new Point3D(-50.0D, -50.0D, 500.0D), new Point3D(50.0D, -50.0D, 500.0D), new Point3D(-50.0D, 50.0D, 500.0D)).setMaterial(new Material(0.5D, 0.5D, 60, 0.0D, 0.0D)) , new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.0D, 0.0D), new Point3D(50.0D, 50.0D, 500.0D), new Point3D(50.0D, -50.0D, 500.0D), new Point3D(-50.0D, 50.0D, 500.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.0D, 0.0D), new Point3D(50.0D, 50.0D, 500.0D), new Point3D(0.0D, 100.0D, 400.0D), new Point3D(-50.0D, 50.0D, 500.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.0D, 0.0D), new Point3D(0.0D, 100.0D, 400.0D), new Point3D(-50.0D, 50.0D, 500.0D), new Point3D(-100.0D, 100.0D, 400.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.0D, 0.0D), new Point3D(-50.0D, -50.0D, 500.0D), new Point3D(-50.0D, 50.0D, 500.0D), new Point3D(-100.0D, 100.0D, 400.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.0D, 0.0D), new Point3D(-50.0D, -50.0D, 500.0D), new Point3D(-100.0D, 0.0D, 400.0D), new Point3D(-100.0D, 100.0D, 400.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.5D, 0.0D), new Point3D(-50.0D, -50.0D, 500.0D), new Point3D(-100.0D, 0.0D, 400.0D), new Point3D(0.0D, 0.0D, 400.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.5D, 0.0D), new Point3D(-50.0D, -50.0D, 500.0D), new Point3D(50.0D, -50.0D, 500.0D), new Point3D(0.0D, 0.0D, 400.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.3D, 0.0D), new Point3D(0.0D, 100.0D, 400.0D), new Point3D(50.0D, -50.0D, 500.0D), new Point3D(0.0D, 0.0D, 400.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.3D, 0.0D), new Point3D(0.0D, 100.0D, 400.0D), new Point3D(50.0D, -50.0D, 500.0D), new Point3D(50.0D, 50.0D, 500.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.3D, 0.0D), new Point3D(0.0D, 100.0D, 400.0D), new Point3D(-100.0D, 100.0D, 400.0D), new Point3D(0.0D, 0.0D, 400.0D)), new Triangle(new Color(255.0D, 72.0D, 84.0D), new Material(0.5D, 0.5D, 60, 0.3D, 0.0D), new Point3D(-100.0D, 0.0D, 400.0D), new Point3D(-100.0D, 100.0D, 400.0D), new Point3D(0.0D, 0.0D, 400.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-50.0D, 50.0D, 400.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-75.0D, 25.0D, 400.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-75.0D, 75.0D, 400.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-25.0D, 25.0D, 400.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-25.0D, 75.0D, 400.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(25.0D, 25.0D, 450.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-25.0D, -25.0D, 450.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-38.0D, -38.0D, 475.0D)), new Sphere(new Material(0.2D, 0.6D, 30, 0.0D, 0.0D), new Color(java.awt.Color.BLACK), 8.0D, new Point3D(-12.5D, -12.5D, 425.0D)), new Plane(new Material(0.2D, 0.2D, 30, 0.0D, 1.0D), new Point3D(0.0D, 0.0D, 550.0D), new Vector(0.0D, 0.0D, -1.0D), new Color(java.awt.Color.black)), new Plane(new Material(0.2D, 0.2D, 30, 0.0D, 0.0D), new Point3D(0.0D, 150.0D, 0.0D), new Vector(0.0D, -1.0D, 0.0D), new Color(java.awt.Color.black))});
-//
-//    byte z;
-//    int j;
-//    int i;
-//        for(j = -12; j < 1; ++j) {
-//        if (j % 2 == 0) {
-//            z = 1;
-//        } else {
-//            z = 0;
-//        }
-//
-//        for(i = -1; i < 4; ++i) {
-//            scene.geometries.add(new Intersectable[]{new Triangle(new Color(115.0D, 110.0D, 110.0D), new Material(0.5D, 0.5D, 20, 0.0D, 1.0D), new Point3D((double)(-100 + i * 200 + z * 100), 150.0D, (double)(450 + j * 100)), new Point3D((double)(0 + i * 200 + z * 100), 150.0D, (double)(450 + j * 100)), new Point3D((double)(-100 + i * 200 + z * 100), 150.0D, (double)(550 + j * 100))), new Triangle(new Color(115.0D, 110.0D, 110.0D), new Material(0.5D, 0.5D, 20, 0.0D, 1.0D), new Point3D((double)(0 + i * 200 + z * 100), 150.0D, (double)(550 + j * 100)), new Point3D((double)(0 + i * 200 + z * 100), 150.0D, (double)(450 + j * 100)), new Point3D((double)(-100 + i * 200 + z * 100), 150.0D, (double)(550 + j * 100)))});
-//        }
-//    }
-//
-//        for(j = -12; j < 1; ++j) {
-//            if (j % 2 == 0) {
-//                z = 0;
-//            } else {
-//                z = 1;
-//            }
-//
-//            for (i = -1; i < 3; ++i) {
-//                scene.geometries.add(new Intersectable[]{new Triangle(new Color(-150.0D, -150.0D, -150.0D), new Material(0.5D, 0.5D, 20, 0.0D, 1.0D), new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100))), new Triangle(new Color(-150.0D, -150.0D, -150.0D), new Material(0.5D, 0.5D, 20, 0.0D, 1.0D), new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100)), new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100)))});
-//            }
-//
-//        }
-//        ImageWriter imageWriter = new ImageWriter("cat BVH test", 200.0D, 200.0D, 600, 600);
-//        Render render = (new Render(imageWriter, scene)).setMultithreading(5).setDebugPrint();
-//        render.renderImage();
-//        render.writeToImage();
-//    }
-
 }
-//
-//    int z;
-//    int j;
-//    int i;
-//        for (j = -12; j < 1; ++j) {
-//        if (j % 2 == 0) {
-//        z = 1;
-//        } else {
-//        z = 0;
-//        }
-//
-//        for (i = -1; i < 4; ++i) {
-//        scene.geometries.add(new Intersectable[]{new Triangle(new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100))).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(20)).setEmission(new Color(115.0D, 110.0D, 110.0D)),
-//        new Triangle(new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100)), new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100))).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(20)).setEmission(new Color(115.0D, 110.0D, 110.0D))});
-//        }
-//        }
-//
-//        for (j = -12; j < 1; ++j) {
-//        if (j % 2 == 0) {
-//        z = 0;
-//        } else {
-//        z = 1;
-//        }
-//
-//        for (i = -1; i < 3; ++i) {
-//        scene.geometries.add(new Intersectable[]{new Triangle(new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100))).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(20)).setEmission(new Color(0.0D, 0.0D, 0.0D)),
-//        new Triangle(new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100)), new Point3D((double) (0 + i * 200 + z * 100), 150.0D, (double) (450 + j * 100)), new Point3D((double) (-100 + i * 200 + z * 100), 150.0D, (double) (550 + j * 100))).setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(20)).setEmission(new Color(0.0D, 0.0D, 0.0D))});
-//        }
-//
-//        }

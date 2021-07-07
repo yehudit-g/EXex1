@@ -46,14 +46,14 @@ public abstract class Geometry implements Intersectable {
      */
     public abstract Vector getNormal(Point3D p);
 
-    /**
-     * for BVH improvement
-     * @param ray
-     * @return if the ray intersects the box or not
-     */
-    public boolean IsIntersectionInBox(Ray ray){
-        return true;
-    }
+//    /**
+//     * for BVH improvement
+//     * @param ray
+//     * @return if the ray intersects the box or not
+//     */
+//    public boolean IsIntersectionInBox(Ray ray){
+//        return true;
+//    }
 //        Point3D rayP0=ray.getP0();
 //        Point3D rayDirection=ray.getDir().getHead();
 //
