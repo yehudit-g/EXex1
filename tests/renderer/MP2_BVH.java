@@ -443,9 +443,9 @@ public class MP2_BVH {
         Render render = new Render()
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
-               // .setMultithreading(3) //fot threading improvement
+                .setMultithreading(3) //fot threading improvement
               //  .setDebugPrint()
-                .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH())); //.turnOnUsingBVH()
+                .setRayTracer(new BasicRayTracer(scene)); //.turnOnUsingBVH()
         render.renderImage();
         render.writeToImage();
     }

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Composite class for all intersectable objects
  */
-public class Geometries implements Intersectable {
+public class Geometries extends Intersectable {
     private List<Intersectable> intersectable = null;
     public boolean isUsingBVH = false; //flag for BVH improvement
 

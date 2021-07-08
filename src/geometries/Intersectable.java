@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 /**
  * The interface is responsible about finding intersections with geometries
  */
-public interface Intersectable {
+public abstract class Intersectable {
     public BoundingBox _box = new BoundingBox();//new BoundingBox(); //for BVH improvement
 
     /**
@@ -43,7 +43,7 @@ public interface Intersectable {
      * getter for BVH improvement
      * @return the geometry's box
      */
-    public default BoundingBox getBox() {
+    public BoundingBox getBox() {
         this.setBox();
         return _box;
     }
@@ -51,7 +51,7 @@ public interface Intersectable {
     /**
      * Update the box corners according to the Geometry's borders
      */
-    default Intersectable setBox(){return this;};
+   public Intersectable setBox(){return this;};
 
     /**
      *find the geometry's intersections with the given ray, at the given disance only
@@ -59,13 +59,13 @@ public interface Intersectable {
      * @param maxDistance limits the intersections' search.
      * @return list of geoPoint intersections between the given ray and the geometry
      */
-     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+     abstract List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
 
     /**
      * @param ray
      * @return list of geoPoint intersections with no limit of distance.
      */
-    default List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
 
@@ -74,7 +74,7 @@ public interface Intersectable {
      * @param ray
      * @return list of intersections between the given ray and the geometry
      */
-    default List<Point3D> findIntersections(Ray ray) {
+     public List<Point3D> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null
                 : geoList.stream()
