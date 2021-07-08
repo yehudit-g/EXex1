@@ -126,7 +126,7 @@ public class MP2_BVH {
     @Test
     public void BVHpic() {
         Camera camera = new Camera(new Point3D(-300, 0, 1000), new Vector(300, 0, -1000), new Vector(0, 1, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(350);//.setFocalPlane(200, 1, 1);
+                .setViewPlaneSize(30, 30).setDistance(600);//.setFocalPlane(200, 1, 1);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
         scene.background=Color.BLACK;
@@ -386,15 +386,40 @@ public class MP2_BVH {
                         .setEmission(new Color(java.awt.Color.gray)) //cube_ right
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
 
-                new Polygon(new Point3D(30, -23, -30), new Point3D(21, -23, -28),
-                        new Point3D(21, -18, -28),  new Point3D(30, -18, -30))
+                new Polygon(new Point3D(21, -28, -30), new Point3D(21, -23, -28),
+                        new Point3D(21, -18, -28),  new Point3D(21, -23, -30))
+                        .setEmission(new Color(java.awt.Color.gray)) //cube_ left
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+
+                new Polygon(new Point3D(30, -23, -28), new Point3D(21, -23, -28),
+                        new Point3D(21, -18, -28),  new Point3D(30, -18, -28))
                         .setEmission(new Color(java.awt.Color.gray)) //cube_ back
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
 
-                new Polygon(new Point3D(30, -28, -30), new Point3D(21, -28, -28),
-                        new Point3D(21, -23, -28),  new Point3D(30, -23, -30))
+                new Polygon(new Point3D(30, -28, -30), new Point3D(21, -28, -30),
+                        new Point3D(21, -23, -30),  new Point3D(30, -23, -30))
                         .setEmission(new Color(java.awt.Color.gray)) //cube_ front
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
+
+                new Polygon(new Point3D(30, 40, -70), new Point3D(40, 40, -70),
+                        new Point3D(33, 28, -60))
+                        .setEmission(new Color(java.awt.Color.gray)), //cube_ front
+
+        new Polygon(new Point3D(25, 40, -70), new Point3D(15, 40, -70),
+                new Point3D(20, 28, -60))
+                .setEmission(new Color(java.awt.Color.cyan)), //cube_ front
+
+                new Polygon(new Point3D(-30, 40, -70), new Point3D(-25, 40, -70),
+                        new Point3D(-25, 30, -70),  new Point3D(-30, 30, -70))
+                        .setEmission(new Color(java.awt.Color.gray)),
+
+                new Polygon(new Point3D(-25, 40, -70), new Point3D(-20, 40, -70),
+                        new Point3D(-20, 30, -70),  new Point3D(-25, 30, -70))
+                        .setEmission(new Color(java.awt.Color.darkGray)),
+
+                new Polygon(new Point3D(-20, 40, -70), new Point3D(-15, 40, -70),
+                        new Point3D(-15, 30, -70),  new Point3D(-20, 30, -70))
+                        .setEmission(new Color(java.awt.Color.green)),
 
 
 //                new Polygon(new Point3D(35,-9, 30), new Point3D(35, -11, 28),
@@ -404,7 +429,7 @@ public class MP2_BVH {
                 new Sphere(1, new Point3D(0,-23,0))
                 .setEmission(new Color(java.awt.Color.GREEN)),
 
-                new Sphere(5, new Point3D(-25,-19,0))
+                new Sphere(3, new Point3D(0,5,200))
                         .setEmission(new Color(java.awt.Color.cyan))
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
                 new Sphere(3, new Point3D(-10,-28,0))
@@ -433,6 +458,8 @@ public class MP2_BVH {
         Render render = new Render()
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
+               // .setMultithreading(3) //fot threading improvement
+              //  .setDebugPrint()
                 .setRayTracer(new BasicRayTracer(scene)); //.turnOnUsingBVH()
         render.renderImage();
         render.writeToImage();
