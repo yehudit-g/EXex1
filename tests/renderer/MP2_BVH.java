@@ -22,21 +22,6 @@ public class MP2_BVH {
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
-//        Geometries pyramid = new Geometries(
-//                new Triangle(new Point3D(8, -9, 5), new Point3D(2, -9, 5), new Point3D(4, -11, 0))
-//                        .setEmission(new Color(java.awt.Color.blue))
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.0)), //base
-//                new Triangle(new Point3D(4, -11, 0), new Point3D(8, -9, 5), new Point3D(5, 0, 0))
-//                        .setEmission(new Color(250, 30, 100)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
-//                new Triangle(new Point3D(8, -9, 5), new Point3D(2, -9, 5), new Point3D(5, 0, 0))
-//                        .setEmission(new Color(250, 30, 100)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)),
-//                new Triangle(new Point3D(2, -9, 5), new Point3D(4, -11, 0), new Point3D(5, 0, 0))
-//                        .setEmission(new Color(250, 30, 100)) //
-//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6))
-//        );
-
         Geometries cube = new Geometries(
                 new Polygon(new Point3D(9, -10, 0), new Point3D(12, -12, -10), new Point3D(9, -14, -20), new Point3D(6, -12, -10))
                         .setEmission(new Color(java.awt.Color.blue))
@@ -126,7 +111,7 @@ public class MP2_BVH {
     @Test
     public void BVHpic() {
         Camera camera = new Camera(new Point3D(-300, 0, 1000), new Vector(300, 0, -1000), new Vector(0, 1, 0)) //
-                .setViewPlaneSize(30, 30).setDistance(600);//.setFocalPlane(200, 1, 1);
+                .setViewPlaneSize(30, 30).setDistance(350);//.setFocalPlane(200, 1, 1);
 
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
         scene.background=Color.BLACK;
@@ -460,7 +445,7 @@ public class MP2_BVH {
                 .setCamera(camera)
                // .setMultithreading(3) //fot threading improvement
               //  .setDebugPrint()
-                .setRayTracer(new BasicRayTracer(scene)); //.turnOnUsingBVH()
+                .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH())); //.turnOnUsingBVH()
         render.renderImage();
         render.writeToImage();
     }

@@ -13,7 +13,7 @@ public class Render {
     Camera _camera;
     BasicRayTracer _rayTracer;
     //for threads improvement:
-    private int threadsCount = 0;
+    private int threadsCount = 1;
     private static final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
     private boolean print = false; // printing progress percentage
     private boolean thread1 = false; //
@@ -204,7 +204,7 @@ public class Render {
 
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
-        if (thread1) {
+        //if (thread1) {
             final Pixel thePixel = new Pixel(nY, nX);
             // Generate threads
             Thread[] threads = new Thread[threadsCount];
@@ -240,21 +240,21 @@ public class Render {
 
             if (print)
                 System.out.print("\r100%");
-        }
-        else {
-            for (int i = 0; i < nY; i++) {
-                for (int j = 0; j < nX; j++) {
-                    if (numOfRays > 1) { //after picture improvement
-                        List<Ray> beam = _camera.constructRayThroughPixel(nX, nY, j, i, numOfRays);
-                        _imageWriter.writePixel(j, i, _rayTracer.traceRay(beam));
-                    } else { //before picture improvement
-                        Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
-                        _imageWriter.writePixel(j, i, _rayTracer.traceRay(ray));
-                    }
-
-                }
-            }
-        }
+//        }
+//        else {
+//            for (int i = 0; i < nY; i++) {
+//                for (int j = 0; j < nX; j++) {
+//                    if (numOfRays > 1) { //after picture improvement
+//                        List<Ray> beam = _camera.constructRayThroughPixel(nX, nY, j, i, numOfRays);
+//                        _imageWriter.writePixel(j, i, _rayTracer.traceRay(beam));
+//                    } else { //before picture improvement
+//                        Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
+//                        _imageWriter.writePixel(j, i, _rayTracer.traceRay(ray));
+//                    }
+//
+//                }
+//            }
+//        }
     }
 
     /**

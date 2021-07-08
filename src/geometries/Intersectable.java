@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * The interface is responsible about finding intersections with geometries
  */
 public interface Intersectable {
-    BoundingBox _box = new BoundingBox(); //for BVH improvement
+    public BoundingBox _box = new BoundingBox();//new BoundingBox(); //for BVH improvement
 
     /**
      * The class represent a 3D point on a geometry.
@@ -51,7 +51,7 @@ public interface Intersectable {
     /**
      * Update the box corners according to the Geometry's borders
      */
-    default void setBox(){};
+    default Intersectable setBox(){return this;};
 
     /**
      *find the geometry's intersections with the given ray, at the given disance only

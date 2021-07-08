@@ -14,7 +14,6 @@ import static primitives.Util.isZero;
  * by 3D center point and radius length
  */
 public class Sphere extends RadialGeometry {
-
     private final Point3D _center;
 
     public Sphere(double radius, Point3D center) {
@@ -23,13 +22,14 @@ public class Sphere extends RadialGeometry {
     }
 
     @Override
-    public void setBox() {
+    public Intersectable setBox() {
         _box.setMaxX(_center.getX()+_radius);
         _box.setMaxY(_center.getY()+_radius);
         _box.setMaxZ(_center.getZ()+_radius);
         _box.setMinX(_center.getX()-_radius);
         _box.setMinY(_center.getY()-_radius);
         _box.setMinZ(_center.getZ()-_radius);
+        return this;
     }
 
     public Point3D getCenter() {

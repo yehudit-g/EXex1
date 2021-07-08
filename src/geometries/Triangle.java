@@ -17,6 +17,10 @@ public class Triangle extends Polygon {
 
     }
 
+    public Vector getNormal(Point3D point) {
+        return plane.getNormal();
+    }
+
 //    @Override
 //    public List<Point3D> findIntersections(Ray ray) {
 //        List<Point3D> lst = super.findIntersections(ray);

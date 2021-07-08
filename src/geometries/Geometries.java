@@ -34,7 +34,7 @@ public class Geometries implements Intersectable {
      * set the box borders according to the Min/Max values of the geometries' list
      */
     @Override
-    public void setBox() {
+    public Intersectable setBox() {
         _box.ResetOppositeValuesBox();
         BoundingBox b;
         for (Intersectable element : intersectable) {
@@ -46,6 +46,7 @@ public class Geometries implements Intersectable {
             _box.minY = Math.min(_box.getMinY(), b.getMinY());
             _box.minZ = Math.min(_box.getMinZ(), b.getMinZ());
         }
+        return this;
     }
 
     public Geometries(Intersectable... lst) {
@@ -67,14 +68,16 @@ public class Geometries implements Intersectable {
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> result = null;
-        if (!isUsingBVH || /*element.*/getBox().IsIntersectionInBox(ray)) {
+        if (!isUsingBVH || getBox().IsIntersectionInBox(ray)) {
             for (Intersectable element : intersectable) {
-                List<GeoPoint> elemList = element.findGeoIntersections(ray, maxDistance);
-                if (elemList != null) {
-                    if (result == null) {
-                        result = new LinkedList<>();
+                if (!isUsingBVH ||element.getBox().IsIntersectionInBox(ray)) {
+                    List<GeoPoint> elemList = element.findGeoIntersections(ray, maxDistance);
+                    if (elemList != null) {
+                        if (result == null) {
+                            result = new LinkedList<>();
+                        }
+                        result.addAll((elemList));
                     }
-                    result.addAll((elemList));
                 }
             }
         }

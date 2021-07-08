@@ -81,7 +81,7 @@ public class Polygon extends Geometry {
     }
 
     @Override
-    public void setBox() {
+    public Intersectable setBox() {
         _box.ResetOppositeValuesBox();
         double px,py,pz;
         for (Point3D p:vertices) {
@@ -93,6 +93,7 @@ public class Polygon extends Geometry {
             _box.setMinY(Math.min(_box.minY, py));
             _box.setMinZ(Math.min(_box.minZ, pz));
         }
+       return this;
     }
 
     /**
