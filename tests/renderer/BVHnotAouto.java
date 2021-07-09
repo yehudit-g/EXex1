@@ -313,8 +313,8 @@ public class BVHnotAouto {
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
                  .setMultithreading(3) //fot threading improvement
-                //  .setDebugPrint()
-                .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH()));
+                  .setDebugPrint()
+                .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH()));//.turnOnUsingBVH()
         render.renderImage();
         render.writeToImage();
     }
