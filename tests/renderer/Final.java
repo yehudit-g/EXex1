@@ -7,6 +7,7 @@ import elements.SpotLight;
 import geometries.Geometries;
 import geometries.Polygon;
 import geometries.Sphere;
+import geometries.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.Color;
 import primitives.Material;
@@ -126,14 +127,57 @@ public class Final {
                         .setMaterial(mat),
                 new Sphere(0.6, new Point3D(-3.2, -13, -80))
                         .setEmission(new Color(java.awt.Color.blue))
-                        .setMaterial(mat)
+                        .setMaterial(mat),
+//
+//                new Polygon(new Point3D(-13, -12, -100),  new Point3D(-7, -12, -100),
+//                        new Point3D(-7, -15, -100), new Point3D(-13, -15, -100))
+//                       .setEmission(new Color(85,0,0))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(50)),
+//
+//                new Polygon(new Point3D(-10.2, -5, -100), new Point3D(-8.4, -5, -100),
+//                        new Point3D(-8.4, -7, -100), new Point3D(-10.2, -7, -100))
+//                        .setEmission(new Color(85,0,0))
+//                .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(50).setKt(0.7).setKr(0.8)),
+//
+//                new Sphere(2.5, new Point3D(-10, -9.7, -100))
+//                .setEmission(new Color(70,0,0))
+//                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.2).setKr(0.6))
+                new Polygon(new Point3D(-12, -8, -90), new Point3D(-7, -8, -90),
+                        new Point3D(-7, -15, -90), new Point3D(-12, -15, -90))
+                        .setEmission(new Color(97,0,0))//wine battle-front
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
+
+                new Polygon(new Point3D(-11, -7, -90), new Point3D(-6, -7, -90),
+                        new Point3D(-6, -14, -90), new Point3D(-11, -14, -90))
+                        .setEmission(new Color(85,0,0))//wine battle-back
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
+
+                new Polygon(new Point3D(-11, -7, -90), new Point3D(-6, -7, -90),
+                        new Point3D(-7, -8, -90), new Point3D(-12, -8, -90))
+                        .setEmission(new Color(85,0,0))//wine battle-up
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
+
+                new Polygon(new Point3D(-10, -10, -80), new Point3D(-7, -10, -80),
+                        new Point3D(-7, -12, -80), new Point3D(-10, -12, -80))
+                        .setEmission(new Color(10, 10, 10)),//wine battle-label
+                       // .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
+
+                new Polygon(new Point3D(-10.3, -5, -90), new Point3D(-8.5, -5, -90),
+                        new Point3D(-8.5, -8, -90), new Point3D(-10.3, -8, -90))
+                        .setEmission(new Color(85,0,0))
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(50)),
+
+        new Sphere(1.8, new Point3D(-9.4, -4.2, -90))
+                        .setEmission(new Color(java.awt.Color.blue))
+                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(50).setKt(0.8).setKr(0.8))
+
 
         );
         //stars:
         Material starMat = new Material().setKd(0.2).setKs(0.2).setShininess(50);
         //x between -30,30. y between 15,25.
         for (int i = 0; i < 20; i++) {
-            scene.geometries.add(new Sphere(0.9, new Point3D(Math.random()*60-30, Math.random()*13+15, -350))
+            scene.geometries.add(new Sphere(0.9, new Point3D(Math.random() * 60 - 30, Math.random() * 13 + 15, -350))
                     .setEmission(new Color(java.awt.Color.orange))
                     .setMaterial(starMat));
         }
@@ -151,7 +195,7 @@ public class Final {
                 .setMultithreading(3) //fot threading improvement
                 .setDebugPrint()
                 .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH())); //BVH
-        render.renderImage(81);
+        render.renderImage(9);
         render.writeToImage();
     }
 }
