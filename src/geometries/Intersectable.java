@@ -44,17 +44,20 @@ public abstract class Intersectable {
      * @return the geometry's box
      */
     public BoundingBox getBox() {
-        this.setBox();
+        if(_box.maxX==Double.POSITIVE_INFINITY) //maybe not setted box
+            this.setBox();
         return _box;
     }
 
     /**
      * Update the box corners according to the Geometry's borders
+     * (for infinity geometries)
+     * @return this. chaining method
      */
    public Intersectable setBox(){return this;};
 
     /**
-     *find the geometry's intersections with the given ray, at the given disance only
+     *find the geometry's intersections with the given ray, at the given distance only
      * @param ray
      * @param maxDistance limits the intersections' search.
      * @return list of geoPoint intersections between the given ray and the geometry
