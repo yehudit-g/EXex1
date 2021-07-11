@@ -76,4 +76,14 @@ public class Scene {
         geometries.BuildTree();
         return this;
     }
+
+    /**
+     * turning on the BVH improvement with manually hierarchy
+     * @return this. chaining method
+     */
+    public Scene turnOnManuallyBVH() {
+        geometries.turnOnBVH();
+        return this;
+    }
+
 }

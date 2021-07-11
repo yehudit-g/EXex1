@@ -106,11 +106,6 @@ public class BoundingBox{ // implements Intersectable
         return center.distance(b_center);
     }
 
-//    @Override
-//    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
-//        return null;
-//    }
-
     /**
      * The calculation in this func was written according to this nice file(p.18):
      * https://www.cs.tau.ac.il/~dcor/Graphics/pdf.slides/RT_acceleration2016.pdf

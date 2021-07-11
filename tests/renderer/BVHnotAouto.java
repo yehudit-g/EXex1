@@ -61,7 +61,7 @@ public class BVHnotAouto {
                                                 new Point3D(-28, -5, -30), new Point3D(-28, -10, -30))
                                                 .setEmission(new Color(java.awt.Color.red)) //cube1-triangle-back
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox(),
+                                ).turnOnBVH(),
                                 new Geometries(
                                         new Polygon(new Point3D(-25, -10, -30), new Point3D(-25, -15, -28),
                                                 new Point3D(-15, -15, -28), new Point3D(-15, -10, -30))
@@ -92,7 +92,7 @@ public class BVHnotAouto {
                                                 new Point3D(-15, -15, -28), new Point3D(-15, -10, -28))
                                                 .setEmission(new Color(java.awt.Color.orange)) //cube2 front
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox(),
+                                ).turnOnBVH() ,
                                 new Geometries(
                                         new Polygon(new Point3D(-8, -10, -30), new Point3D(-8, -15, -28),
                                                 new Point3D(-13.5, -15, -28), new Point3D(-13.5, -10, -30))
@@ -123,7 +123,7 @@ public class BVHnotAouto {
                                                 new Point3D(-13.5, -15, -28), new Point3D(-13.5, -10, -28))
                                                 .setEmission(new Color(java.awt.Color.red)) //cube3 front
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox(),
+                                ).turnOnBVH(),
                                 new Geometries(
                                         new Polygon(new Point3D(-23, -2, -30), new Point3D(-23, -7, -28),
                                                 new Point3D(-10, -7, -28), new Point3D(-10, -2, -30))
@@ -154,8 +154,8 @@ public class BVHnotAouto {
                                                 new Point3D(-10, -7, -28), new Point3D(-10, -5, -28))
                                                 .setEmission(new Color(java.awt.Color.green)) //cube7 front
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox()
-                        ).turnOnBVH().setBox(),
+                                ).turnOnBVH()
+                        ).turnOnBVH(),
                         new Geometries(
                                 new Geometries(
                                         new Polygon(new Point3D(20, -10, -30), new Point3D(20, -15, -28),
@@ -187,7 +187,7 @@ public class BVHnotAouto {
                                                 new Point3D(10, -10, -28), new Point3D(20, -10, -28))
                                                 .setEmission(new Color(java.awt.Color.blue)) //cube4 front
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox(),
+                                ).turnOnBVH(),
                                 new Geometries(
                                         new Polygon(new Point3D(35, -10, -30), new Point3D(35, -15, -28),
                                                 new Point3D(21, -15, -28), new Point3D(21, -10, -30))
@@ -218,7 +218,7 @@ public class BVHnotAouto {
                                                 new Point3D(21, -10, -28), new Point3D(35, -10, -28))
                                                 .setEmission(new Color(java.awt.Color.green)) //cube5 front
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox(),
+                                ).turnOnBVH(),
                                 new Geometries(
                                         new Polygon(new Point3D(25, -2, -30), new Point3D(25, -8, -28),
                                                 new Point3D(13, -8, -28), new Point3D(13, -2, -30))
@@ -249,8 +249,8 @@ public class BVHnotAouto {
                                                 new Point3D(13, 2, -28), new Point3D(13, -8, -28))
                                                 .setEmission(new Color(java.awt.Color.orange)) //cube6 front
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox()
-                        ).turnOnBVH().setBox(),
+                                ).turnOnBVH()
+                        ).turnOnBVH(),
                         new Geometries(
                                 new Geometries(
                                         new Polygon(new Point3D(30, -28, -30), new Point3D(30, -23, -28),
@@ -282,7 +282,7 @@ public class BVHnotAouto {
                                                 new Point3D(21, -23, -30), new Point3D(30, -23, -30))
                                                 .setEmission(new Color(java.awt.Color.gray)) //cube_ front
                                                 .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox()
-                                ).turnOnBVH().setBox(),
+                                ).turnOnBVH(),
                                 new Geometries(
                                         new Sphere(3, new Point3D(-10, -28, 0))
                                                 .setEmission(new Color(java.awt.Color.magenta))
@@ -295,9 +295,9 @@ public class BVHnotAouto {
 //                                .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)).setBox(),
 
 
-                                ).turnOnBVH().setBox()
-                        ).turnOnBVH().setBox()
-                ).turnOnBVH().setBox()
+                                ).turnOnBVH()
+                        ).turnOnBVH()
+                ).turnOnBVH()
 
         );
 
@@ -313,8 +313,8 @@ public class BVHnotAouto {
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
                  .setMultithreading(3) //fot threading improvement
-                //  .setDebugPrint()
-                .setRayTracer(new BasicRayTracer(scene));
+                  .setDebugPrint()
+                .setRayTracer(new BasicRayTracer(scene.turnOnManuallyBVH()));//.turnOnManuallyBVH()
         render.renderImage();
         render.writeToImage();
     }

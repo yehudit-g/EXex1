@@ -14,7 +14,7 @@ import scene.Scene;
 public class TeaPotTest {
 
     private final Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
-            .setDistance(1000).setViewPlaneSize(200, 200);
+            .setDistance(850).setViewPlaneSize(200, 200);//.setFocalPlane(100,1,1);
     private final Scene scene = new Scene("Test scene");
 
     private static final Color color = new Color(200, 0, 0);
@@ -1559,8 +1559,8 @@ public class TeaPotTest {
         Render render = new Render() //
                 .setCamera(camera) //
                 .setImageWriter(imageWriter) //
-                .setRayTracer(new BasicRayTracer(scene)); //
-                //.setMultithreading(3).setDebugPrint();
+                .setRayTracer(new BasicRayTracer(scene)); //.turnOnUsingBVH()
+//                .setMultithreading(3).setDebugPrint();
         render.renderImage();
         render.printGrid(50, new Color(java.awt.Color.YELLOW));
         render.writeToImage();
