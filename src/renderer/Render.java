@@ -91,7 +91,7 @@ public class Render {
             this.pixels = (long) maxRows * maxCols;
             this.nextCounter = this.pixels / 100;
             if (Render.this.print)
-                System.out.printf("\r %02d%%", this.percents);
+                System.out.println(this.percents);
         }
 
         /**
@@ -172,7 +172,7 @@ public class Render {
                         synchronized (this) {
                             wait();
                         }
-                        System.out.println(/*"\r %02d%%",*/ this.percents);
+                        System.out.println(this.percents);
                         System.out.flush();
                     } catch (Exception e) {
                     }
@@ -188,6 +188,7 @@ public class Render {
 
     /**
      * render the scene by construct rays through each pixel, tracing and writing it to an image
+     *
      * @param numOfRays
      */
     public void renderImage(int numOfRays) {
@@ -200,107 +201,45 @@ public class Render {
 
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
-            final Pixel thePixel = new Pixel(nY, nX);
-            // Generate threads
-            Thread[] threads = new Thread[threadsCount];
-            for (int i = threadsCount - 1; i >= 0; --i) {
-                threads[i] = new Thread(() -> {
-                    Pixel pixel = new Pixel();
-                    while (thePixel.nextPixel(pixel)) {
-                        if (numOfRays > 1) { //after DOF improvement
-                            List<Ray> beam = _camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, numOfRays);
-                            _imageWriter.writePixel(pixel.col, pixel.row, _rayTracer.traceRay(beam));
-                        } else { //before DOF improvement
-                            Ray ray = _camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row);
-                            _imageWriter.writePixel(pixel.col, pixel.row, _rayTracer.traceRay(ray));
-                        }
-                        //castRay(nX, nY, pixel.col, pixel.row);
+        final Pixel thePixel = new Pixel(nY, nX);
+        // Generate threads
+        Thread[] threads = new Thread[threadsCount];
+        for (int i = threadsCount - 1; i >= 0; --i) {
+            threads[i] = new Thread(() -> {
+                Pixel pixel = new Pixel();
+                while (thePixel.nextPixel(pixel)) {
+                    if (numOfRays > 1) { //after DOF improvement
+                        List<Ray> beam = _camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row, numOfRays);
+                        _imageWriter.writePixel(pixel.col, pixel.row, _rayTracer.traceRay(beam));
+                    } else { //before DOF improvement
+                        Ray ray = _camera.constructRayThroughPixel(nX, nY, pixel.col, pixel.row);
+                        _imageWriter.writePixel(pixel.col, pixel.row, _rayTracer.traceRay(ray));
                     }
-                });
-
-            }
-            // Start threads
-            for (Thread thread : threads)
-                thread.start();
-
-            // Print percents on the console
-            thePixel.print();
-
-            // Ensure all threads have finished
-            for (Thread thread : threads)
-                try {
-                    thread.join();
-                } catch (Exception e) {
                 }
+            });
 
-            if (print)
-                System.out.print("\r100%");
-//        }
-//        else {
-//            for (int i = 0; i < nY; i++) {
-//                for (int j = 0; j < nX; j++) {
-//                    if (numOfRays > 1) { //after picture improvement
-//                        List<Ray> beam = _camera.constructRayThroughPixel(nX, nY, j, i, numOfRays);
-//                        _imageWriter.writePixel(j, i, _rayTracer.traceRay(beam));
-//                    } else { //before picture improvement
-//                        Ray ray = _camera.constructRayThroughPixel(nX, nY, j, i);
-//                        _imageWriter.writePixel(j, i, _rayTracer.traceRay(ray));
-//                    }
-//
-//                }
-//            }
-//        }
+        }
+        // Start threads
+        for (Thread thread : threads)
+            thread.start();
+
+        // Print percents on the console
+        thePixel.print();
+
+        // Ensure all threads have finished
+        for (Thread thread : threads)
+            try {
+                thread.join();
+            } catch (Exception e) {
+            }
+
+        if (print)
+            System.out.print("\r100%");
     }
 
     /**
-     * Cast ray from camera in order to color a pixel
-     * @param nX resolution on X axis (number of pixels in row)
-     * @param nY resolution on Y axis (number of pixels in column)
-     * @param col pixel's column number (pixel index in row)
-     * @param row pixel's row number (pixel index in column)
-     */
-//    private void castRay(int nX, int nY, int col, int row) {
-//        Ray ray = _camera.constructRayThroughPixel(nX, nY, col, row);
-//        Color color = _rayTracer.traceRay(ray);
-//        _imageWriter.writePixel(col, row, color);
-//    }
-    /**
-     * This function renders image's pixel color map from the scene included with
-     * the Renderer object - with multi-threading
-     */
-//    private void renderImageThreaded() {
-//        final int nX = _imageWriter.getNx();
-//        final int nY = _imageWriter.getNy();
-//        final Pixel thePixel = new Pixel(nY, nX);
-//        // Generate threads
-//        Thread[] threads = new Thread[threadsCount];
-//        for (int i = threadsCount - 1; i >= 0; --i) {
-//            threads[i] = new Thread(() -> {
-//                Pixel pixel = new Pixel();
-//                while (thePixel.nextPixel(pixel))
-//                    castRay(nX, nY, pixel.col, pixel.row);
-//            });
-//        }
-//        // Start threads
-//        for (Thread thread : threads)
-//            thread.start();
-//
-//        // Print percents on the console
-//        thePixel.print();
-//
-//        // Ensure all threads have finished
-//        for (Thread thread : threads)
-//            try {
-//                thread.join();
-//            } catch (Exception e) {
-//            }
-//
-//        if (print)
-//            System.out.print("\r100%");
-//    }
-
-    /**
      * create the grid in the desired color
+     *
      * @param interval - pixel length and width
      * @param color
      */
