@@ -16,7 +16,6 @@ public class Render {
     private int threadsCount = 1;
     private static final int SPARE_THREADS = 2; // Spare threads if trying to use all the cores
     private boolean print = false; // printing progress percentage
-    private boolean thread1 = false; //
 
     public Render setImageWriter(ImageWriter imageWriter) {
         _imageWriter = imageWriter;
@@ -43,7 +42,6 @@ public class Render {
     public Render setMultithreading(int threads) {
         if (threads < 0)
             throw new IllegalArgumentException("Multithreading parameter must be 0 or higher");
-        thread1 = true;
         if (threads != 0) {
             this.threadsCount = threads;
         } else {
@@ -190,7 +188,6 @@ public class Render {
 
     /**
      * render the scene by construct rays through each pixel, tracing and writing it to an image
-     *
      * @param numOfRays
      */
     public void renderImage(int numOfRays) {
@@ -201,10 +198,8 @@ public class Render {
         if (_rayTracer == null)
             throw new MissingResourceException("", "Render", "_rayTracer");
 
-
         int nX = _imageWriter.getNx();
         int nY = _imageWriter.getNy();
-        //if (thread1) {
             final Pixel thePixel = new Pixel(nY, nX);
             // Generate threads
             Thread[] threads = new Thread[threadsCount];
@@ -306,7 +301,6 @@ public class Render {
 
     /**
      * create the grid in the desired color
-     *
      * @param interval - pixel length and width
      * @param color
      */
