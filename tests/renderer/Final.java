@@ -187,49 +187,49 @@ public class Final {
                         .setEmission(new Color(85,0,0))//wine battle-left
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
 
-                new Polygon(new Point3D(-10, -5, -91), new Point3D(-9, -4, -91),
+                new Polygon(new Point3D(-9.25, -5, -91), new Point3D(-8.25, -4, -91),
                         new Point3D(-10, -5, -90), new Point3D(-11, -6, -90))
                         .setEmission(new Color(85,0,0))//wine battle-left triangle
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
 
-                new Polygon(new Point3D(-7, -6, -90), new Point3D(-8, -5, -90),
-                        new Point3D(-7, -4, -91), new Point3D(-6, -5, -91))
+                new Polygon(new Point3D(-7, -6, -90), new Point3D(-8.75, -5, -90),
+                        new Point3D(-7.75, -4, -91), new Point3D(-6, -5, -91))
                         .setEmission(new Color(85,0,0))//wine battle-right triangle
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
 
                 new Polygon(new Point3D(-10, -5, -91), new Point3D(-6, -5, -91),
-                        new Point3D(-7, -4, -91), new Point3D(-9, -4, -91))
+                        new Point3D(-7.75, -4, -91), new Point3D(-8.25, -4, -91))
                         .setEmission(new Color(85,0,0))//wine battle-back triangle
                        .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
 
-                new Polygon(new Point3D(-11, -6, -90), new Point3D(-10, -5, -90),
-                        new Point3D(-8, -5, -90), new Point3D(-7, -6, -90))
-                        .setEmission(new Color(85,0,0))//wine battle-front triangle
-                  .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.8)),
+                new Polygon(new Point3D(-11, -6, -90), new Point3D(-9.25, -5, -90),
+                        new Point3D(-8.75, -5, -90), new Point3D(-7, -6, -90))
+                        .setEmission(new Color(0,0,100))//wine battle-front triangle
+                  .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.2)),
 
 
-                new Polygon(new Point3D(-10, -5, -90), new Point3D(-8, -5, -90),
-                        new Point3D(-8, -1, -90), new Point3D(-10, -1, -90))
+                new Polygon(new Point3D(-9.25, -5, -90), new Point3D(-8.75, -5, -90),
+                        new Point3D(-8.5, -1, -90), new Point3D(-9.5, -1, -90))
                         .setEmission(new Color(java.awt.Color.gray))//wine battle-front Bottleneck
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(80).setKt(0.3)),
 
-                new Polygon(new Point3D(-9, -4, -91), new Point3D(-7, -4, -91),
-                        new Point3D(-7, 0, -91), new Point3D(-9, 0, -91))
+                new Polygon(new Point3D(-8.25, -4, -91), new Point3D(-7.75, -4, -91),
+                        new Point3D(-7.5, 0, -91), new Point3D(-8.5, 0, -91))
                         .setEmission(new Color(java.awt.Color.gray))//wine battle-back Bottleneck
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(80).setKt(0.3)),
 
-                new Polygon(new Point3D(-10, -5, -90), new Point3D(-9, -4, -91),
-                        new Point3D(-9, 0, -91), new Point3D(-10, -1, -90))
+                new Polygon(new Point3D(-9.25, -5, -90), new Point3D(-8.25, -4, -91),
+                        new Point3D(-8.5, 0, -91), new Point3D(-9.5, -1, -90))
                         .setEmission(new Color(java.awt.Color.gray))//wine battle-left Bottleneck
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(80).setKt(0.3)),
 
-                new Polygon(new Point3D(-7, -4, -91), new Point3D(-8, -5, -90),
-                        new Point3D(-8, -1, -90), new Point3D(-7, 0, -91))
+                new Polygon(new Point3D(-7.75, -4, -91), new Point3D(-8.75, -5, -90),
+                        new Point3D(-8.5, -1, -90), new Point3D(-7.5, 0, -91))
                         .setEmission(new Color(java.awt.Color.gray))//wine battle-right Bottleneck
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(80).setKt(0.3)),
 
-                new Polygon(new Point3D(-9, 0, -91), new Point3D(-7, 0, -91),
-                        new Point3D(-8, -1, -90), new Point3D(-10, -1, -90))
+                new Polygon(new Point3D(-8.5, 0, -91), new Point3D(-7.5, 0, -91),
+                        new Point3D(-8.5, -1, -90), new Point3D(-9.5, -1, -90))
                         .setEmission(new Color(java.awt.Color.gray))//wine battle-up Bottleneck
                         .setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(80).setKt(0.3)),
 
@@ -258,6 +258,7 @@ public class Final {
         scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(8, -9, -10), new Vector(0, -1, 0)));
         //scene.lights.add(new SpotLight(new Color(java.awt.Color.white), new Point3D(5, 0, 0), new Vector(0, -1, -0.25)));
 
+
         ImageWriter imageWriter = new ImageWriter("Tova Haaretz", 600, 600);
         Render render = new Render()
                 .setImageWriter(imageWriter)
@@ -265,7 +266,7 @@ public class Final {
                 .setMultithreading(3) //for threading improvement
                 .setDebugPrint()
                 .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH())); //BVH
-        render.renderImage(81);
+        render.renderImage(9);
         render.writeToImage();
     }
 }
