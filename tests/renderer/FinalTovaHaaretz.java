@@ -14,7 +14,7 @@ import scene.Scene;
 
 import java.util.Random;
 
-public class Final {
+public class FinalTovaHaaretz {
     private Scene scene = new Scene("Test scene");
 
     @Test

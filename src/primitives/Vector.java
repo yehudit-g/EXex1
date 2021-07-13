@@ -2,7 +2,7 @@ package primitives;
 
 /**
  * Class Vector represents a Vector in Cartesian coordinate system
- * by its three dimensional point head
+ * by its three dimensional point head(in relation to the beginning of the axes)
  */
 public class Vector {
 

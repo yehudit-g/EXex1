@@ -12,7 +12,7 @@ import primitives.Point3D;
 import primitives.Vector;
 import scene.Scene;
 
-public class MP2_BVH {
+public class BVHAuto {
     private Scene scene = new Scene("Test scene");
 //
 //    @Test
@@ -439,13 +439,13 @@ public class MP2_BVH {
         scene.lights.add(new SpotLight(new Color(700, 400, 400), new Point3D(8, -9, -10), new Vector(0,-1,0)));
         //scene.lights.add(new SpotLight(new Color(java.awt.Color.white), new Point3D(5, 0, 0), new Vector(0, -1, -0.25)));
 
-        ImageWriter imageWriter = new ImageWriter("BVHpic", 600, 600);
+        ImageWriter imageWriter = new ImageWriter("BVHAuto", 600, 600);
         Render render = new Render()
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
                 .setMultithreading(3) //fot threading improvement
                 .setDebugPrint()
-                .setRayTracer(new BasicRayTracer(scene)); //.turnOnUsingBVH()
+                .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH())); //.turnOnUsingBVH()
         render.renderImage();
         render.writeToImage();
     }
