@@ -261,9 +261,9 @@ public class FinalTovaHaaretz {
         Render render = new Render()
                 .setImageWriter(imageWriter)
                 .setCamera(camera)
-               // .setMultithreading(3) //for threading improvement
-               // .setDebugPrint()
-                .setRayTracer(new BasicRayTracer(scene)); //BVH
+                .setMultithreading(3) //for threading improvement
+                .setDebugPrint()
+                .setRayTracer(new BasicRayTracer(scene.turnOnUsingBVH())); //BVH
         render.renderImage(81);
         render.writeToImage();
     }
